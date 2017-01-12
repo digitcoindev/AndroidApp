@@ -1,5 +1,6 @@
 package org.nem.nac.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -55,7 +56,7 @@ public final class ServersListActivity extends NacBaseActivity {
 		}
 		else {
 			finish();
-			// start configuration activity
+			startActivity(new Intent(this, ConfigurationActivity.class));
 		}
 	}
 

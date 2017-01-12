@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 	<string name="title_activity_create_account">Créer un compte</string>
 	<string name="title_activity_account_list">Comptes</string>
 	<string name="errormessage_account_name_empty">S\'il vous plaît, entrez votre nom</string>
@@ -129,18 +128,18 @@
 	<string name="placeholder_recipient_addr">Entrer l\'adresse</string>
 	<string name="label_amount_with_balance_part_1">Montant (Balance:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Frais (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Frais (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Entrez les frais</string>
 	<string name="toolbar_btn_new">Nouveau</string>
 	<string name="errormessage_not_allowed">Interdit</string>
 	<string name="errormessage_fee_less_than_min">Les frais sont inférieure au minimum requis</string>
-	<string name="errormessage_failed_to_import_account">Impossible d\'importer compte</string>
+	<string name="errormessage_failed_to_import_account">Import échoué\nMot de passe incorrect</string>
 	<string name="btn_share_qr">Partager un QR</string>
 	<string name="email_body_share_account">Scannez ce QR pour importer le compte %s .</string>
 	<string name="email_subject_share_account">Compte exporté NEM : %s</string>
 	<string name="action_chooser_share_account">Compte NEM</string>
 	<string name="label_checkbox_use_app_password">Utilisez le mot de passe applicatif</string>
-	<string name="errormessage_failed_to_export_account">Échec de l\'exportation du compte !</string>
+	<string name="errormessage_failed_to_export_account">Échec de l\'exportation du compte!</string>
 	<string name="title_fragment_my_info">Mes Informations</string>
 	<string name="title_fragment_create_invoice">Facutre</string>
 	<string name="title_fragment_scan">Scan</string>
@@ -180,14 +179,14 @@
 	<string name="tran_info_confirmed">Bloc: \n%1$d\nFrais: %2$s</string>
 	<string name="dialog_title_setup_app_password">Définir le mot de passe applicatif</string>
 	<string name="dialog_title_change_app_password">Changer le mot de passe applicatif</string>
-	<string name="errormessage_failed_to_change_password">Impossible de changer le mot de passe !</string>
+	<string name="errormessage_failed_to_change_password">Impossible de changer le mot de passe!</string>
 	<string name="input_hint_current_password">Mot de passe actuel</string>
 	<string name="input_hint_new_password">Nouveau mot de passe</string>
 	<string name="input_hint_confirm_password">Confirmez le mot de passe</string>
 	<string name="title_activity_select_sender">Sélectionnez l\'expéditeur</string>
 	<string name="title_activity_harvest_details">Détails de la récolte</string>
 	<string name="more_item_harvest_details">Détails de la récolte</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">Solde acquis: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Récolte délégué: %1$s</string>
 	<string name="label_balance">Solde: %s XEM</string>
@@ -207,7 +206,7 @@
 	<string name="configuration_header_notifications">Notifications</string>
 	<string name="config_item_notifications_interval">Intervalle de mise à jour</string>
 	<string name="errormessage_malformed_qr">QR malformé</string>
-	<string name="crash_report_toast_text">Le client NEM s\'est fermé , envoi de rapport d\'erreur ...</string>
+	<string name="crash_report_toast_text">Le client NEM s\'est fermé, envoi de rapport d\'erreur ...</string>
 	<string name="dialog_option_add_to_address_book">Ajouter au carnet d\'adresses</string>
 	<string name="dialog_option_send_transaction">Envoyer une transaction</string>
 	<string name="dialog_option_already_in_address_book">Déjà dans le carnet d\'adresses</string>
@@ -226,7 +225,7 @@
 	<string name="notification_updates_title">Mise à jour NEM</string>
 	<string name="notification_updates_text">Nouvelles opérations pour %1$s: %2$d</string>
 	<string name="btn_show_private_key">Show Private Key</string>
-	<string name="message_private_key_exposure_warning_html">Il est essentiel de comprendre que la clé privée est la partie la plus importante et la plus sensible de l\'information de votre compte.&lt;br/>&lt;br/>Quiconque a connaissance d\'une clé privée a &lt;font color="#7D1010">le plein contrôle sur les fonds et les actifs associés&lt;/font>.&lt;br/>&lt;br/>Il est essentiel pour récupérer votre compte, donc ne le perdez pas, mais &lt;font color="#7D1010">gardez en sureté et surtout ne le partagé pas.&lt;/font></string>
+	<string name="message_private_key_exposure_warning_html">Il est essentiel de comprendre que la clé privée est la partie la plus importante et la plus sensible de l\'information de votre compte.&lt;br/>&lt;br/>Quiconque a connaissance d\'une clé privée a &lt;font color="#7D1010">le plein contrôle sur les fonds et les actifs associés&lt;/font>.&lt;br/>&lt;br/>Il est essentiel pour récupérer votre compte, donc ne le perdez pas, mais &lt;font color="#7D1010">gardez en sureté et surtout ne le partagé pas.&lt;/font> </string>
 	<string name="btn_i_understand">Je comprends</string>
 	<string name="label_private_key">Clé privée :</string>
 	<string name="server_result_code_success">Succès</string>
@@ -244,7 +243,7 @@
 	<string name="server_result_code_transaction_signed_by_harvester">Le bloc contient une transaction qui a été signé par le récolteur</string>
 	<string name="server_result_code_previous_importance_transaction_conflict">Une transaction d\'importance précédente est en conflit avec une nouvelle transaction</string>
 	<string name="server_result_code_previous_importance_transfer_active">Une activation de transfert d\'importance a été tentée alors que la précédente est toujours active</string>
-	<string name="server_result_code_importance_transfer_not_active">Une désactivation du transfert d\'importance a été tentée , mais n\'est pas actif</string>
+	<string name="server_result_code_importance_transfer_not_active">Une désactivation du transfert d\'importance a été tentée, mais n\'est pas actif</string>
 	<string name="server_result_code_unknown_status">État inconnu</string>
 	<string name="server_result_code_nis_stopped">NIS est arrêté</string>
 	<string name="server_result_code_nis_starting">NIS est en cours de démarrage</string>
@@ -258,8 +257,8 @@
 	<string name="server_result_code_unknown_result">Résultat inconnu</string>
 	<string name="server_result_code_failure_transaction_not_allowed_for_multisig">Transaction non autorisée pour du multisignature</string>
 	<string name="server_result_code_multisig_already_a_cosigner">Déjà un cosignataire</string>
-	<string name="server_result_code_failure_multisig_not_a_cosigner">Not a cosigner</string>
-	<string name="server_result_code_failure_multisig_modification_multiple_deletes">It is only allowed to remove one cosignatory at a time.</string>
+	<string name="server_result_code_failure_multisig_not_a_cosigner">Pas un cosignataire</string>
+	<string name="server_result_code_failure_multisig_modification_multiple_deletes">Il est seulement permis de supprimer un cosignataire à la fois.</string>
 	<string name="label_public_key">Clé publique:</string>
 	<string name="dialog_title_edit_account">Modifier le compte</string>
 	<string name="message_saved">Enregistré</string>
@@ -304,7 +303,25 @@
 	<string name="errormessage_min_cosigs_too_big">Le nombre minimum de cosignataires ne peut pas être plus grand que le nombre total de cosignataires</string>
 	<string name="dialog_title_edit_contact">Modifier le contact</string>
 	<string name="errormessage_non_existing_contact">Erreur: Contact inexistant</string>
-	<string name="errormessage_failed_to_prepare_transaction">Failed to prepare transaction!</string>
-	<string name="dialog_message_no_network">No network connection</string>
-	<string name="btn_wifi_settings">WiFi Settings</string>
+	<string name="errormessage_failed_to_prepare_transaction">Impossible de préparer la transaction!</string>
+	<string name="dialog_message_no_network">Pas de connexion réseau</string>
+	<string name="btn_wifi_settings">Paramètres Wifi</string>
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> of %2$s Signataires</string>
+	<string name="tran_info_min_signers_count">Min %1$s Signataires</string>
+	<string name="title_activity_unconfirmed_list">Non confirmé</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">Afficher les modifications</string>
+	<string name="dialog_message_have_unconfirmed">Vous avez des transactions non confirmées qui doivent être signés.\nVoulez-vous les voirs?</string>
+	<string name="btn_show_unconfirmed">Affiché</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">Info</string>
+	<string name="unconfirmed_info_account">&lt;b>Compte:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>Supprimé:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>Ajouté:&lt;/b></string>
+	<string name="label_unconfirmed_date">Non confirmé</string>
+	<string name="debug_log_file_deleted">Supprimé</string>
+	<string name="debug_hint_report_comment">Commentaire</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">Ceci est une version de test bêta.\nL\'équipe de NEM n\'est pas responsable de toute perte de fonds résultant des tests de cette application.\nLes utilisateurs sont responsables de leurs fonds et de sauvegardées leurs clés privées.\nNe pas pas utiliser sauf si vous êtes sûr que tous vos fonds sont bien sauvegardés. Nous suggérons d\'écrire vos clés privées sur du papier et le ranger dans un endroit sécuritaire. Additionnelement, vous pouvez importer vos comptes en dans le Lightwallet/NCC/NanoWallet.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">Je l\'ai lu et compris cet avertissement et aurai mes clés privées sauvegardées.</string>
+	<string name="dialog_title_mainnet_warning">Avertissement</string>
 </resources>

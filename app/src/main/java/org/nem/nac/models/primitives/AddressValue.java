@@ -35,29 +35,6 @@ public final class AddressValue implements Parcelable, Comparable<AddressValue> 
 
 	private final String _value;
 
-	/**
-	 * Creates new {@link AddressValue} from encoded string.
-	 *
-	 * @throws AddressFormatRuntimeException if address is not valid.
-	 */
-	public AddressValue(@NonNull final String value)
-			throws AddressFormatRuntimeException {
-		_value = value;
-		if (!isValid(value)) {
-			throw new AddressFormatRuntimeException("Invalid address!");
-		}
-	}
-
-	@JsonValue
-	public String getRaw() {
-		return _value;
-	}
-
-	@JsonIgnore
-	public int length() {
-		return _value.length();
-	}
-
 	@JsonCreator
 	public static AddressValue fromValue(final String value) {
 		return value != null ? new AddressValue(value) : null;
@@ -127,6 +104,29 @@ public final class AddressValue implements Parcelable, Comparable<AddressValue> 
 	 */
 	public static AddressValue fromPublicKey(byte version, @NonNull final NacPublicKey publicKey) {
 		return new AddressValue(generateEncoded(version, publicKey.getRaw()));
+	}
+
+	/**
+	 * Creates new {@link AddressValue} from encoded string.
+	 *
+	 * @throws AddressFormatRuntimeException if address is not valid.
+	 */
+	public AddressValue(@NonNull final String value)
+			throws AddressFormatRuntimeException {
+		_value = value;
+		if (!isValid(value)) {
+			throw new AddressFormatRuntimeException("Invalid address!");
+		}
+	}
+
+	@JsonValue
+	public String getRaw() {
+		return _value;
+	}
+
+	@JsonIgnore
+	public int length() {
+		return _value.length();
 	}
 
 	public Optional<String> toName() {

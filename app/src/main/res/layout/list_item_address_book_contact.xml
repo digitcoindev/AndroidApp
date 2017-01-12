@@ -37,7 +37,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="@dimen/margin_small_text"
 		android:contentDescription="@string/content_description_nem_contact"
-		android:src="@drawable/ic_hd_logo_small"
+		android:src="@drawable/ic_small_logo"
 		android:visibility="invisible"
 		/>
 	<!--delete icon-->

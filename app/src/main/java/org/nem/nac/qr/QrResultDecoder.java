@@ -20,10 +20,6 @@ public final class QrResultDecoder {
 	private       Consumer<Integer>                  _errorListener;
 	private       BiConsumer<BaseQrData, QrDto.Type> _successListener;
 
-	public QrResultDecoder() {
-		_accountsOnly = false;
-	}
-
 	public QrResultDecoder(final boolean accountsOnly) {
 		_accountsOnly = accountsOnly;
 	}
@@ -35,14 +31,14 @@ public final class QrResultDecoder {
 		_successListener = successListener;
 	}
 
-	public void decodeResult(final QrDecoder.Result result) {
-		if (result.status != QrDecoder.ScanResultStatus.OK) {
+	public void decodeResult(final QrResult qrResult) {
+		if (qrResult.status != ScanResultStatus.OK) {
 			Timber.d("Qr not found");
 			onQrNotFound();
 			return;
 		}
 
-		final String json = result.text;
+		final String json = qrResult.text;
 		final QrDto dto;
 		try {
 			dto = JsonUtils.fromJson(json, QrDto.class);

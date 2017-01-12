@@ -3,7 +3,13 @@ package org.nem.nac.common.enums;
 import org.nem.nac.common.exceptions.NacRuntimeException;
 
 public enum LastTransactionType {
+	/**
+	 * Last transaction that user seen in the app
+	 */
 	SEEN(0),
+	/**
+	 * Last transaction that user was notified of
+	 */
 	NOTIFIED(1);
 
 	public static LastTransactionType fromValue(int value) {

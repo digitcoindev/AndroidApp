@@ -2,6 +2,7 @@ package org.nem.nac.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,7 @@ import timber.log.Timber;
 public final class LoginActivity extends NacBaseActivity {
 
 	public static final String EXTRA_BOOL_SIMPLY_FINISH = LoginActivity.class.getCanonicalName() + ".simply_finish";
+	public static final String EXTRA_BOOL_EXIT_ATTEMPT  = LoginActivity.class.getCanonicalName() + ".exit_attempt";
 
 	public static Intent getIntent(Context packageContext, final Bundle extras, boolean simplyFinish) {
 		final Intent intent = new Intent(packageContext, LoginActivity.class);
@@ -65,14 +67,25 @@ public final class LoginActivity extends NacBaseActivity {
 
 	@Override
 	public void onBackPressed() {
-		finish();
-		System.exit(0);
+		if (Build.VERSION.SDK_INT >= 16) {
+			finishAffinity();
+		}
+		else {
+			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.putExtra(EXTRA_BOOL_EXIT_ATTEMPT, true);
+			startActivity(intent);
+		}
 	}
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getIntent().getExtras() != null) {
+			if (getIntent().hasExtra(EXTRA_BOOL_EXIT_ATTEMPT)) {
+				finish();
+				return;
+			}
 			_simplyFinish = getIntent().getExtras().getBoolean(EXTRA_BOOL_SIMPLY_FINISH, false);
 		}
 

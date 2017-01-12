@@ -29,6 +29,7 @@ import org.nem.nac.application.AppConstants;
 import org.nem.nac.application.AppHost;
 import org.nem.nac.application.AppSettings;
 import org.nem.nac.application.NacApplication;
+import org.nem.nac.common.TimeSpan;
 import org.nem.nac.common.async.AsyncResult;
 import org.nem.nac.common.enums.AccountType;
 import org.nem.nac.common.exceptions.NacException;
@@ -81,6 +82,8 @@ public final class MessagesActivity extends NacBaseActivity {
 	public static final  String EXTRA_STR_COMPANION_ADDRESS_RAW =
 			MessagesActivity.class.getCanonicalName() + "companion-address";
 	private static final String FRAG_TAG_NO_NETWORK_DIALOG      = MessagesActivity.class.getCanonicalName() + ".wifi-settings";
+
+	private static final int REFRESH_AFTER_SEND_DELAY_MS = 1500;
 
 	private TextView                 _nameLabel;
 	private TextView                 _balanceLabel;
@@ -195,6 +198,7 @@ public final class MessagesActivity extends NacBaseActivity {
 			ConfirmDialogFragment.create(true, null, R.string.dialog_message_no_network, R.string.btn_wifi_settings)
 					.setOnConfirmListener(d -> {
 						startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), RequestCodes.ACTION_WIFI_SETTINGS);
+						return true;
 					})
 					.show(getFragmentManager(), FRAG_TAG_NO_NETWORK_DIALOG);
 		}
@@ -257,6 +261,7 @@ public final class MessagesActivity extends NacBaseActivity {
 	}
 
 	private void updateData() {
+		Timber.i("Updating transactions data...");
 		_scrollToNewTransactions.set(false);
 
 		if (!ServerManager.instance().hasServers()) {
@@ -521,12 +526,21 @@ public final class MessagesActivity extends NacBaseActivity {
 							_amountInput.setText("");
 							_messageInput.setText("");
 							//
+							_updateCaller.stop();
 							ConfirmDialogFragment.create(true, null, R.string.dialog_message_transaction_announced, null)
-									.setOnDismissListener(d ->
-											getHandler().postDelayed(() ->
-													new GetAccountTransactionsAsyncTask(this, _address)
-															.withCompleteCallback(this::onAccountTransactions)
-															.execute(), 500))
+									.setOnDismissListener(d -> {
+										_updateCaller =
+												new IntervalCaller(TimeSpan.fromMilliSeconds(REFRESH_AFTER_SEND_DELAY_MS), this::updateData, 1, caller -> {
+													_updateCaller = new IntervalCaller(AppConstants.DATA_AUTOREFRESH_INTERVAL, this::updateData);
+													_updateCaller.start(false);
+												});
+										_updateCaller.start(true);
+									})
+//											}
+//											getHandler().postDelayed(() ->
+//													new GetAccountTransactionsAsyncTask(this, _address)
+//															.withCompleteCallback(this::onAccountTransactions)
+//															.execute(), 500))
 									.show(getFragmentManager(), null);
 						}
 					}

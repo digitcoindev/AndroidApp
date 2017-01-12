@@ -3,11 +3,20 @@ package org.nem.nac.ui;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.annimon.stream.function.Consumer;
+
 import org.nem.nac.common.TimeSpan;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import timber.log.Timber;
 
 public final class IntervalCaller {
 
-	private Handler  _mainHandler;
+	private final int _maxCalls;
+	private final AtomicInteger _callsCount = new AtomicInteger(0);
+	private Consumer<IntervalCaller> _onMaxCallsReachedCallback;
+	private Handler                  _mainHandler;
 	private int      _intervalMs;
 	private Runnable _callback;
 	private boolean _running = false;
@@ -16,6 +25,17 @@ public final class IntervalCaller {
 		_mainHandler = new Handler(Looper.getMainLooper());
 		_intervalMs = ((int)interval.toMilliSeconds());
 		_callback = callback;
+		_maxCalls = Integer.MAX_VALUE;
+		_onMaxCallsReachedCallback = null;
+	}
+
+	public IntervalCaller(final TimeSpan interval, final Runnable callback, final int maxCalls, final Consumer<IntervalCaller> onMaxCallsReachedCallback) {
+		_onMaxCallsReachedCallback = onMaxCallsReachedCallback;
+		_mainHandler = new Handler(Looper.getMainLooper());
+		_intervalMs = ((int)interval.toMilliSeconds());
+		_callback = callback;
+		_maxCalls = Math.max(1, maxCalls);
+		_onMaxCallsReachedCallback = onMaxCallsReachedCallback;
 	}
 
 	public synchronized boolean isRunning() {
@@ -44,13 +64,28 @@ public final class IntervalCaller {
 		}
 	}
 
+	public synchronized void resetCallCount() {
+		_callsCount.set(0);
+	}
+
 	private final Runnable _looperRunnable = new Runnable() {
 		@Override
 		public void run() {
+			final int calls = _callsCount.incrementAndGet();
+			Timber.d("run(), calls %s/%s", calls, _maxCalls);
 			if (_callback != null) {
 				_callback.run();
 			}
-			_mainHandler.postDelayed(_looperRunnable, _intervalMs);
+			if (calls >= _maxCalls) {
+				_running = false;
+				Timber.d("Max calls reached");
+				if (_onMaxCallsReachedCallback != null) {
+					_onMaxCallsReachedCallback.accept(IntervalCaller.this);
+				}
+			}
+			else {
+				_mainHandler.postDelayed(_looperRunnable, _intervalMs);
+			}
 		}
 	};
 }

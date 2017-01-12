@@ -1,29 +1,24 @@
 package org.nem.nac.ui.fragments;
 
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.graphics.PointF;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
 import org.nem.nac.R;
 import org.nem.nac.application.AppHost;
-import org.nem.nac.camera.CameraManager;
 import org.nem.nac.common.utils.AssertUtils;
-import org.nem.nac.common.utils.LogUtils;
 import org.nem.nac.common.utils.StringUtils;
 import org.nem.nac.crypto.NacCryptoException;
 import org.nem.nac.datamodel.repositories.AccountRepository;
 import org.nem.nac.helpers.ContactsHelper;
-import org.nem.nac.log.LogTags;
 import org.nem.nac.models.BinaryData;
 import org.nem.nac.models.EncryptedNacPrivateKey;
 import org.nem.nac.models.NacPrivateKey;
@@ -37,21 +32,20 @@ import org.nem.nac.models.qr.QrInvoice;
 import org.nem.nac.models.qr.QrUserInfo;
 import org.nem.nac.providers.AddressInfoProvider;
 import org.nem.nac.providers.EKeyProvider;
-import org.nem.nac.qr.QrDecoder;
+import org.nem.nac.qr.QrResult;
 import org.nem.nac.qr.QrResultDecoder;
+import org.nem.nac.qr.ScanResultStatus;
 import org.nem.nac.ui.activities.AccountListActivity;
+import org.nem.nac.ui.activities.NacBaseActivity;
 import org.nem.nac.ui.activities.NewTransactionActivity;
-import org.nem.nac.ui.controls.CameraSurfaceView;
 import org.nem.nac.ui.dialogs.CheckPasswordDialogFragment;
 import org.nem.nac.ui.dialogs.ConfirmDialogFragment;
 import org.nem.nac.ui.dialogs.UserInfoImportDialogFragment;
 import org.nem.nac.ui.utils.Toaster;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import timber.log.Timber;
 
-public final class ScanFragment extends BaseTabFragment {
+public final class ScanFragment extends BaseTabFragment implements QRCodeReaderView.OnQRCodeReadListener {
 
 	private static final String ARG_BOOL_ACCOUNTS_ONLY = "accounts-only";
 
@@ -66,60 +60,35 @@ public final class ScanFragment extends BaseTabFragment {
 		return fragment;
 	}
 
-	private       CameraManager _cameraManager = new CameraManager();
-	private final Handler       _mainHandler   = new Handler(Looper.getMainLooper());
-	private CameraSurfaceView _preview;
-	private QrDecoder _qrDecoder = null;
+	private QRCodeReaderView _qrView;
+
 	private QrResultDecoder _qrResultDecoder;
-	private final AtomicBoolean _decodeFrames = new AtomicBoolean(false);
 	private boolean _accountsOnly = false;
 
-	/**
-	 * Releaes camera for other apps
-	 */
-	public void releaseCamera() {
-		if (_cameraManager != null) { _cameraManager.close(); }
-		_cameraManager = new CameraManager();
-	}
-
-	public void freeResources() {
-		if (_cameraManager != null) { _cameraManager.close(); }
-	}
-
-	//region Lifecycle
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onCreate()+");
 		final Bundle args = getArguments();
 		if (args != null) {
 			_accountsOnly = args.getBoolean(ARG_BOOL_ACCOUNTS_ONLY, false);
 		}
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onCreate()-");
+		//
+		_qrResultDecoder = new QrResultDecoder(_accountsOnly);
+		_qrResultDecoder.setCallbacks(this::onQrNotFound, this::onQrError, this::onQrScanSuccess);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onCreateView()+");
-		final View layout = inflater.inflate(R.layout.fragment_scan, container, false);
-		_preview = (CameraSurfaceView)layout.findViewById(R.id.camera_preview);
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onCreateView()-");
-		return layout;
+		return inflater.inflate(R.layout.fragment_scan, container, false);
 	}
 
 	@Override
-	public void onDetach() {
-		super.onDetach();
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onDetach()+");
-		freeResources();
-		try {
-			_mainHandler.removeCallbacksAndMessages(null);
-		} catch (Throwable throwable) {
-			Timber.wtf(throwable, "Failed to removeCallbacksAndMessages from main handler");
-		}
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onDetach()-");
+	public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		_qrView = (QRCodeReaderView)view.findViewById(R.id.qr_code_reader_view);
+		_qrView.setOnQRCodeReadListener(this);
 	}
 
 	//endregion
@@ -127,78 +96,28 @@ public final class ScanFragment extends BaseTabFragment {
 	@Override
 	protected void onFullyVisible() {
 		super.onFullyVisible();
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onFullyVisible()+");
-		if(!new BarcodeDetector.Builder(getActivity()).build().isOperational()) {
-			Toaster.instance().show(R.string.errormessage_barcode_scanner_dependencies_not_available);
-			// Check for low storage. If there is low storage, the native library will not be
-			// downloaded, so detection will not become operational.
-			IntentFilter lowstorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
-			boolean hasLowStorage = getActivity().registerReceiver(null, lowstorageFilter) != null;
-			if (hasLowStorage) {
-				Timber.e("Low storage - won't load barcode libraries!");
-			}
-		}
-		// If something not initialized - initialize it once
-		if (_qrDecoder == null) { _qrDecoder = new QrDecoder(); }
-		//
-		if (_qrResultDecoder == null) {
-			_qrResultDecoder = new QrResultDecoder(_accountsOnly);
-			_qrResultDecoder.setCallbacks(this::onQrNotFound, this::onQrError, this::onQrScanSuccess);
-		}
-		//
-		if (_cameraManager == null) { _cameraManager = new CameraManager(); }
-		//
-		if (!_cameraManager.isInitialized()) {
-			if (!_cameraManager.initialize(_preview)) {
-				Timber.e("Failed to init camera manager!");
-				Toaster.instance().show(R.string.errormessage_failed_to_init_camera);
-				return;
-			}
-			_cameraManager.setFrameCallback(this::onFrame);
-		}
-		//
-		if (_cameraManager.startPreview()) {
-			_decodeFrames.set(true);
-		}
-		else {
-			LogUtils.conditional(Log.ERROR, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "Failed to start preview");
-			Toaster.instance().showGeneralError();
-		}
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onFullyVisible()-");
+		_qrView.startCamera();
+		_qrView.setQRDecodingEnabled(true);
 	}
 
 	@Override
 	protected void onHiding() {
 		super.onHiding();
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onHiding()+");
-		if (!_cameraManager.stopPreview()) {
-			LogUtils.conditional(Log.ERROR, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "Failed to stop preview");
-		}
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onHiding()-");
+		_qrView.stopCamera();
 	}
 
-	private void onFrame(final byte[] image, final int width, final int height) {
-		final boolean decodeFrames = _decodeFrames.get();
-		if (!isFullyVisible || !decodeFrames) {
+	@Override
+	public void onQRCodeRead(final ScanResultStatus status, final String text, final PointF[] points) {
+		if (!((NacBaseActivity)getActivity()).isNotDestroyed()) {
 			return;
 		}
-
-		_decodeFrames.set(false);
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "Decoding...");
-		_qrDecoder.decodeDtoAsync(image, width, height, this::onDecodingComplete);
+		if (_qrView.getQRDecodingEnabled() && _qrResultDecoder != null) {
+			_qrView.setQRDecodingEnabled(false);
+			_qrResultDecoder.decodeResult(new QrResult(status, text));
+		}
 	}
 
 	//region QR Decode
-
-	private void onDecodingComplete(final QrDecoder.Result result) {
-		LogUtils.conditional(Log.DEBUG, LogTags.SCAN_FRAGMENT.isLogged, LogTags.SCAN_FRAGMENT.name, "onDecodingComplete()+");
-		if (!isFullyVisible) {
-			Timber.d("Fragment not visible, skipping");
-			_decodeFrames.set(false);
-			return;
-		}
-		_qrResultDecoder.decodeResult(result);
-	}
 
 	private void onQrScanSuccess(final BaseQrData qrData, final QrDto.Type type) {
 		switch (type) {
@@ -228,7 +147,7 @@ public final class ScanFragment extends BaseTabFragment {
 							try {
 								importQrAccount(qrAccount.name, privKey, publicKey);
 							} catch (NacCryptoException e) {
-								Toast.makeText(getActivity(), R.string.errormessage_failed_to_import_account, Toast.LENGTH_SHORT).show();
+								Toaster.instance().show(R.string.errormessage_failed_to_import_account);
 								postCanDecodeFrames(RESTART_DELAY_BIG);
 							}
 						})
@@ -311,6 +230,6 @@ public final class ScanFragment extends BaseTabFragment {
 	}
 
 	private void postCanDecodeFrames(final int delayMs) {
-		_mainHandler.postDelayed(() -> _decodeFrames.set(true), delayMs);
+		_qrView.postDelayed(() -> _qrView.setQRDecodingEnabled(true), delayMs);
 	}
 }

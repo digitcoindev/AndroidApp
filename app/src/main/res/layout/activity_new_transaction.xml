@@ -10,6 +10,7 @@
 	tools:context="org.nem.nac.ui.activities.NewTransactionActivity">
 
 	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appBarLayout"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:theme="@style/AppTheme.AppBarOverlay">
@@ -105,6 +106,7 @@
 					android:gravity="center_vertical|left"
 					android:textSize="@dimen/text_size_medium"
 					android:text="@string/label_amount_with_balance_placeholder"
+					android:textColor="@color/default_black"
 					android:ellipsize="marquee"
 					android:marqueeRepeatLimit="marquee_forever"
 					android:scrollHorizontally="true"
@@ -119,7 +121,6 @@
 					android:background="@color/white"
 					android:hint="@string/input_hint_enter_amount"
 					android:imeOptions="actionNext"
-					android:inputType="number|numberDecimal"
 					android:freezesText="true"
 					/>
 

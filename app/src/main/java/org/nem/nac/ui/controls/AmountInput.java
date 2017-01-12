@@ -114,7 +114,7 @@ public final class AmountInput extends EditText {
 	}
 
 	private void init() {
-		setRawInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+		setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		setFilters(new InputFilter[] { new MaxDecimalSignsFilter() });
 		addTextChangedListener(_validationWatcher);
 		_colorText = getCurrentTextColor();

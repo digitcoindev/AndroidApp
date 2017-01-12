@@ -6,3 +6,9 @@ Project specs: http://bob.nem.ninja/docs/
 * models that are sent/returned from API, have suffix ApiDto.
     If in original specs it has ViewModel suffix, it's omitted, e.g. KeyPairViewModel => KeyPairApiDto;
 * account salt is not used for generating passwords.
+
+-- Localization
+button_$name_text			- text for specified button
+button_text_$name			- text for buttons that can have more than one function
+input_hint_$name			- text for input hints
+content_description_$name	- accessibility feature.

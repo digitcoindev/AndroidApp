@@ -203,7 +203,7 @@ public final class ExportAccountActivity extends NacBaseActivity {
 						if (!eKey.isPresent()) {
 							Timber.wtf("Ekey not present!");
 							Toaster.instance().showGeneralError();
-							return;
+							return true;
 						}
 						try {
 							final String key = _account.privateKey.decryptKey(eKey.get()).toHexStr();
@@ -217,6 +217,7 @@ public final class ExportAccountActivity extends NacBaseActivity {
 							Toaster.instance().showGeneralError();
 						}
 					}
+					return true;
 				})
 				.show(getFragmentManager(), null);
 	}

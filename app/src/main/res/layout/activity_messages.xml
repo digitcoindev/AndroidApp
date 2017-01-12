@@ -10,10 +10,10 @@
 	tools:context="org.nem.nac.ui.activities.MessagesActivity">
 
 	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appBarLayout"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:theme="@style/AppTheme.AppBarOverlay">
-
 		<include layout="@layout/toolbar_top"/>
 	</android.support.design.widget.AppBarLayout>
 
@@ -21,7 +21,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="?attr/actionBarSize"
-		tools:context="org.nem.nac.ui.activities.MessagesActivity">
+		tools:context="org.nem.nac.ui.activities.MessagesActivity"
+		>
 		<!--Top bar-->
 		<LinearLayout
 			android:id="@+id/layout_top_bar"
@@ -156,8 +157,6 @@
 					android:layout_weight="1"
 					android:paddingLeft="@dimen/margin_small"
 					android:paddingRight="@dimen/margin_small"
-					android:inputType="numberDecimal"
-					android:digits="0123456789,."
 					android:hint="@string/input_hint_amount"
 					android:background="@drawable/shape_white_left_rounded"
 					android:lines="1"

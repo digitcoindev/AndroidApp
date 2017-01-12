@@ -8,8 +8,8 @@
 			  android:padding="@dimen/margin_default"
 			  tools:context="org.nem.nac.ui.fragments.ScanFragment">
 
-	<org.nem.nac.ui.controls.CameraSurfaceView
-		android:id="@+id/camera_preview"
+	<com.dlazaro66.qrcodereaderview.QRCodeReaderView
+		android:id="@+id/qr_code_reader_view"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		/>

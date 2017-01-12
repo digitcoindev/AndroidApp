@@ -1,0 +1,25 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="@dimen/margin_small"
+	android:orientation="vertical"
+	android:background="@drawable/shape_popup_content"
+	tools:context="org.nem.nac.ui.dialogs.MainNetStartupWarningDialogFragment">
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/dialog_message_mainnet_warning"
+		android:textColor="@color/default_red"
+		/>
+
+	<CheckBox
+		android:id="@+id/checkbox_accept"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/label_checkbox_confirm_mainnet_warning"
+		android:textColor="@color/main_text"
+		/>
+</LinearLayout>

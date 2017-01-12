@@ -36,27 +36,17 @@ public final class AutocompleteAddressInput extends AutoCompleteTextView {
 
 	public AutocompleteAddressInput(final Context context) {
 		super(context);
-		init();
+		init(context, null);
 	}
 
 	public AutocompleteAddressInput(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
-		if (attrs != null) {
-			TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AutocompleteAddressInput, 0, 0);
-			_disableSuggestions = a.getBoolean(R.styleable.AutocompleteAddressInput_disableSuggestions, false);
-			a.recycle();
-		}
-		init();
+		init(context, attrs);
 	}
 
 	public AutocompleteAddressInput(final Context context, final AttributeSet attrs, final int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		if (attrs != null) {
-			TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AutocompleteAddressInput, defStyleAttr, 0);
-			_disableSuggestions = a.getBoolean(R.styleable.AutocompleteAddressInput_disableSuggestions, false);
-			a.recycle();
-		}
-		init();
+		init(context, attrs);
 	}
 
 	public boolean validate() {
@@ -96,8 +86,13 @@ public final class AutocompleteAddressInput extends AutoCompleteTextView {
 		return Optional.of(AddressValue.fromValue(strippedText));
 	}
 
-	private void init() {
+	private void init(final Context context, final AttributeSet attrs) {
 		this.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+		if (attrs != null) {
+			final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AutocompleteAddressInput, 0, 0);
+			_disableSuggestions = typedArray.getBoolean(R.styleable.AutocompleteAddressInput_disableSuggestions, false);
+			typedArray.recycle();
+		}
 		if (_disableSuggestions) {
 			setFilters(new InputFilter[] { new AddressIllegalCharsStrippingFilter() });
 		}
@@ -132,7 +127,15 @@ public final class AutocompleteAddressInput extends AutoCompleteTextView {
 
 		@Override
 		public void afterTextChanged(final Editable s) {
-			setTag(R.id.tagkey_selected_address, null);
+			final AddressValue selectedAddress = (AddressValue)getTag(R.id.tagkey_selected_address);
+			if (selectedAddress != null) {
+				setTag(R.id.tagkey_selected_address, null);
+				post(() -> {
+					final String addressReplaceString = selectedAddress.toString(true);
+					setText(addressReplaceString);
+					setSelection(Math.max(0, addressReplaceString.length()));
+				});
+			}
 		}
 	};
 

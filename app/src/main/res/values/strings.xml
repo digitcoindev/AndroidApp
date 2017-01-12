@@ -1,8 +1,5 @@
-<resources
-	xmlns:tools="http://schemas.android.com/tools"
-	tools:ignore="MissingTranslation"
-	>
-	<string name="app_name" translatable="false">NEM</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+	<string name="app_name" translatable="false">NEM Mainnet</string>
 	<string name="toolbar_btn_qr" translatable="false">QR</string>
 	<string name="title_activity_qr_tabs" translatable="false">QR</string>
 	<string name="label_balance_xems" translatable="false">%1$s XEM</string>
@@ -21,11 +18,12 @@
 	<string name="lang_name_ja" translatable="false">日本語</string>
 	<string name="lang_name_it" translatable="false">Italiano</string>
 	<string name="lang_name_lt" translatable="false">Lietuvių</string>
-	<string name="lang_name_in" translatable="false">Indonesian</string>
+	<string name="lang_name_in" translatable="false">Bahasa Indonesia</string>
+
 	<string name="title_activity_create_account">Create Account</string>
 	<string name="title_activity_account_list">Accounts</string>
 	<string name="errormessage_account_name_empty">Please enter your name</string>
-	<string name="errortext_password_too_short">Please enter minimum 6 symbols</string>
+	<string name="errortext_password_too_short">Please enter at least 6 characters</string>
 	<string name="text_error">Error</string>
 	<string name="title_activity_import_key">Import Private Key</string>
 	<string name="title_activity_scan_qr">Scan Account</string>
@@ -151,12 +149,12 @@
 	<string name="placeholder_recipient_addr">Enter Address</string>
 	<string name="label_amount_with_balance_part_1">Amount (Balance:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Fee (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Fee (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Enter Fee</string>
 	<string name="toolbar_btn_new">New</string>
 	<string name="errormessage_not_allowed">Not allowed</string>
 	<string name="errormessage_fee_less_than_min">Fee was less than minimum</string>
-	<string name="errormessage_failed_to_import_account">Failed to import account</string>
+	<string name="errormessage_failed_to_import_account">Importing failed\nIncorrect password</string>
 	<string name="btn_share_qr">Share QR</string>
 	<string name="email_body_share_account">Scan this QR to import account %s.</string>
 	<string name="email_subject_share_account">NEM Exported Account: %s</string>
@@ -209,7 +207,7 @@
 	<string name="title_activity_select_sender">Select Sender</string>
 	<string name="title_activity_harvest_details">Harvest Details</string>
 	<string name="more_item_harvest_details">Harvest Details</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">Vested Balance: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Delegated Harvesting: %1$s</string>
 	<string name="label_balance">Balance: %s XEM</string>
@@ -340,6 +338,14 @@
 	<string name="unconfirmed_info_account">&lt;b>Account:&lt;/b> %1$s</string>
 	<string name="unconfirmed_info_deleted_colon">&lt;b>Deleted:&lt;/b></string>
 	<string name="unconfirmed_info_added_colon">&lt;b>Added:&lt;/b></string>
-	<string name="errormessage_barcode_scanner_dependencies_not_available">Barcode scanner dependencies not available!</string>
 	<string name="label_unconfirmed_date">Unconfirmed</string>
+	<string name="debug_log_file_deleted">Deleted</string>
+	<string name="debug_hint_report_comment">Comment</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">This is a beta test version.\nThe NEM team is not responsible for any loss of funds due to testing this app.\nUsers are responsible for their funds and having their private keys backed up.\nDo not use unless you are confident all your funds are securely backed up. We suggest to write down private keys on paper and store it at a safe place. Additionally, you can import your accounts into Lightwallet/NCC/NanoWallet.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">I have read and understood this warning and will have my private keys backed up.</string>
+	<string name="dialog_title_mainnet_warning">Warning</string>
+	<string name="btn_delete_app_data">delete application data</string>
+	<string name="errormessage_database_problem">Unrecoverable database problem, please</string>
+	<string name="notification_text_unsigned_transactions">%1$s has %2$d unsigned transaction(s)</string>
 </resources>

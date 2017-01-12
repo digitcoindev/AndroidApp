@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="true"
+	android:background="@color/white"
+	tools:context="org.nem.nac.ui.activities.HarvestDetailsActivity">
+
+	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appBarLayout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:theme="@style/AppTheme.AppBarOverlay">
+
+		<include layout="@layout/toolbar_top"/>
+	</android.support.design.widget.AppBarLayout>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="?attr/actionBarSize"
+		tools:context="org.nem.nac.ui.activities.MessagesActivity">
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_above="@+id/toolbar_bottom"
+			android:paddingTop="@dimen/margin_default"
+			android:paddingBottom="@dimen/margin_default"
+			>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/activity_horizontal_margin"
+				android:paddingRight="@dimen/activity_horizontal_margin"
+				android:orientation="vertical"
+				>
+				<!--POI-->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/margin_large"
+					>
+
+					<TextView
+						android:id="@+id/textview_poi"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/text_size_medium"
+						/>
+
+					<TextView
+						android:id="@+id/textview_poi_symbol"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/text_size_medium"
+						android:text="@string/poi_symbol"
+						/>
+				</LinearLayout>
+
+				<!--Balance-->
+				<TextView
+					android:id="@+id/textview_balance"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/margin_large"
+					android:textSize="@dimen/text_size_medium"
+					/>
+				<!--Vested balance-->
+				<TextView
+					android:id="@+id/textview_vested_balance"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/margin_large"
+					android:textSize="@dimen/text_size_medium"
+					/>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/separator_thickness"
+					android:layout_marginTop="@dimen/margin_large"
+					android:background="@color/light_gray"
+					android:textSize="@dimen/text_size_medium"
+					/>
+				<!--Delegated Harvesting-->
+				<TextView
+					android:id="@+id/textview_delegated_harvesting"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/margin_large"
+					android:textSize="@dimen/text_size_medium"
+					/>
+				<!--Commented to better times (Hidden as discussed in #86)-->
+				<!--Delegated key label-->
+				<!--<TextView-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:layout_marginTop="@dimen/margin_large"-->
+				<!--android:textSize="@dimen/text_size_medium"-->
+				<!--android:text="@string/label_delegated_key"-->
+				<!--/>-->
+				<!--&lt;!&ndash;Delegated key field&ndash;&gt;-->
+				<!--<TextView-->
+				<!--android:id="@+id/field_delegated_key"-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:layout_marginTop="@dimen/margin_default"-->
+				<!--android:textSize="@dimen/text_size_medium"-->
+				<!--android:textIsSelectable="true"-->
+				<!--/>-->
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/separator_thickness"
+					android:background="@color/light_gray"
+					android:layout_marginTop="@dimen/margin_large"
+					/>
+				<!-- Last 25 blocks-->
+				<TextView
+					android:id="@+id/label_harvested_blocks"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/margin_large"
+					android:textSize="@dimen/text_size_medium"
+					/>
+
+				<LinearLayout
+					android:id="@+id/linear_list_blocks"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					/>
+			</LinearLayout>
+		</ScrollView>
+
+		<include layout="@layout/toolbar_bottom"/>
+	</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

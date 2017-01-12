@@ -72,6 +72,7 @@ public final class UnconfirmedTransfersList extends LinearList<UnconfirmedTransa
 		View itemView = inflater.inflate(R.layout.list_item_message_unconfirmed, this, false);
 		final TransferTransactionApiDto transfer = (TransferTransactionApiDto)item.transaction.unwrapTransaction();
 		final boolean isOutgoing = transfer.isSigner(_ownerAddr);
+		final boolean isFromToMyself = transfer.signer.toAddress().equals(transfer.recipient);
 
 		final Views views;
 		views = new Views(itemView);
@@ -125,7 +126,8 @@ public final class UnconfirmedTransfersList extends LinearList<UnconfirmedTransa
 		}
 
 		views.amountLabel.setText(String
-				.format("%s%s %s", zeroAmount ? "" : isOutgoing ? "-" : "+", transfer.amount.toFractionalString(), getContext().getString(R.string.text_XEM)));
+				.format("%s%s %s", zeroAmount ? "" : (isFromToMyself ? "±" : (isOutgoing ? "-" : "+")), transfer.amount.toFractionalString(), getContext()
+						.getString(R.string.text_XEM)));
 		views.amountLabel.setVisibility(zeroAmount ? View.GONE : View.VISIBLE);
 		//
 		final ViewGroup.LayoutParams layoutParams = views.messagePanel.getLayoutParams();

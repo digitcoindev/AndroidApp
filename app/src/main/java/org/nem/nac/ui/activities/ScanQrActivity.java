@@ -53,16 +53,4 @@ public final class ScanQrActivity extends NacBaseActivity {
 			getHandler().postDelayed(() -> _scanFragment.setUserVisibleHint(true), 50);
 		}
 	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		if (_scanFragment != null) { _scanFragment.releaseCamera(); }
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (_scanFragment != null) { _scanFragment.freeResources(); }
-	}
 }

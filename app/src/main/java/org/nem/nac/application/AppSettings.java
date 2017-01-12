@@ -16,6 +16,8 @@ import org.nem.nac.models.network.Server;
 import org.nem.nac.models.primitives.AddressValue;
 import org.nem.nac.ui.activities.AccountListActivity;
 import org.nem.nac.ui.activities.ExportAccountActivity;
+import org.nem.nac.ui.activities.HarvestDetailsActivity;
+import org.nem.nac.ui.activities.LogActivity;
 import org.nem.nac.ui.activities.MultisigActivity;
 import org.nem.nac.ui.dialogs.EditFieldDialogFragment;
 import org.nem.nac.ui.models.MoreItem;
@@ -35,9 +37,11 @@ public final class AppSettings {
 	private static final String PREF_LAST_USED_ADDRESS = "LAST_USED_ADDRESS";
 	private static final String PREF_PRIMARY_ADDRESS   = "PRIMARY_ADDRESS";
 
+	private static final String PREF_BOOL_SWITCHED_TO_MAINNET      = "PREF_BOOL_MAINNET_RESET";
 	private static final String PREF_BOOL_FIRST_START              = "FIRST_START";
 	private static final String PREF_STR_CURRENT_LANG              = "CURRENT_LOCALE";
 	private static final String PREF_INT_UPDATE_CHECK_INTERVAL_SEC = "PREF_INT_UPDATE_CHECK_INTERVAL_MS";
+	private static final String PREF_BOOL_MAINNET_WARNING_ACCEPTED = "PREF_BOOL_MAINNET_WARNING_ACCEPTED";
 
 	private static final String PREF_BOOL_NOTIFICATION_SOUND              = "PREF_BOOL_NOTIFICATION_SOUND";
 	private static final String PREF_BOOL_NOTIFICATION_VIBRATION          = "PREF_BOOL_NOTIFICATION_VIBRATION";
@@ -49,27 +53,37 @@ public final class AppSettings {
 	private static       Map<String, Integer> _supportedLocalesRes = new LinkedHashMap<>();
 	private static final List<TimeSpan>       _updateIntervals     = new ArrayList<>();
 	private static final Server[]             _predefinedServers   = new Server[] {
-			new Server("http", "211.107.113.251", AppConstants.DEFAULT_PORT),
-			new Server("http", "37.187.70.29", AppConstants.DEFAULT_PORT),
-			new Server("http", "37.59.43.140", AppConstants.DEFAULT_PORT),
-			new Server("http", "52.62.133.0", AppConstants.DEFAULT_PORT),
-			new Server("http", "54.207.48.129", AppConstants.DEFAULT_PORT),
-			new Server("http", "52.69.252.224", AppConstants.DEFAULT_PORT),
-			new Server("http", "104.128.226.60", AppConstants.DEFAULT_PORT),
-			new Server("http", "54.254.215.55", AppConstants.DEFAULT_PORT),
-			new Server("http", "52.79.74.84", AppConstants.DEFAULT_PORT)
+			new Server("http", "jusan.nem.ninja", AppConstants.DEFAULT_PORT),
+			new Server("http", "nijuichi.nem.ninja", AppConstants.DEFAULT_PORT),
+			new Server("http", "85.25.36.97", AppConstants.DEFAULT_PORT),
+			new Server("http", "62.75.171.41", AppConstants.DEFAULT_PORT),
+			new Server("http", "85.25.36.92", AppConstants.DEFAULT_PORT),
+			new Server("http", "199.217.112.135", AppConstants.DEFAULT_PORT),
+			new Server("http", "san.nem.ninja", AppConstants.DEFAULT_PORT),
+			new Server("http", "go.nem.ninja", AppConstants.DEFAULT_PORT),
+			new Server("http", "hachi.nem.ninja", AppConstants.DEFAULT_PORT),
+			new Server("http", "108.61.182.27", AppConstants.DEFAULT_PORT),
+			new Server("http", "104.238.161.61", AppConstants.DEFAULT_PORT),
+			new Server("http", "108.61.168.86", AppConstants.DEFAULT_PORT)
 	};
 
 	static {
 		_moreItems.add(new MoreItem(R.string.more_item_accounts, AccountListActivity::start));
+		_moreItems.add(new MoreItem(HarvestDetailsActivity.class, R.string.more_item_harvest_details));
+		//_moreItems.add(new MoreItem(MapActivity.class, R.string.more_item_map));
 		_moreItems.add(new MoreItem(ExportAccountActivity.class, R.string.more_item_export_account));
 		_moreItems.add(new MoreItem(MultisigActivity.class, R.string.more_item_multisig));
+		if (BuildConfig.DEBUG) {
+			_moreItems.add(new MoreItem(LogActivity.class, R.string.more_item_see_log));
+		}
 		_moreItems.add(new MoreItem(R.string.debug_send_report, a -> {
-			final EditFieldDialogFragment dialog = EditFieldDialogFragment.create(R.string.debug_report_comment, "comment", "", true);
+			final EditFieldDialogFragment dialog =
+					EditFieldDialogFragment.create(R.string.debug_report_comment, NacApplication.getResString(R.string.debug_hint_report_comment), "", true);
 			dialog.setOnConfirmListener(d -> {
 				final String comment = dialog.getValue();
 				ErrorUtils.sendSilentReport("Report sent: " + (comment != null ? comment : null), null);
 				Toaster.instance().show("Sent");
+				return true;
 			})
 					.show(a.getFragmentManager(), null);
 		}));
@@ -77,10 +91,10 @@ public final class AppSettings {
 			final File filesDir = a.getFilesDir();
 			final File file = new File(filesDir, AppConstants.LOG_FILE_NAME);
 			if (file.exists() && file.delete()) {
-				Toaster.instance().show("Deleted");
+				Toaster.instance().show(R.string.debug_log_file_deleted);
 			}
 			else {
-				Toaster.instance().show("Not exist");
+				Toaster.instance().show(R.string.debug_log_file_deleted);
 			}
 		}));
 
@@ -97,9 +111,9 @@ public final class AppSettings {
 		_supportedLocalesRes.put("nl", R.string.lang_name_nl);
 		_supportedLocalesRes.put("pl", R.string.lang_name_pl);
 		_supportedLocalesRes.put("pt", R.string.lang_name_pt);
-		_supportedLocalesRes.put("ru", R.string.lang_name_ru);
+		//_supportedLocalesRes.put("ru", R.string.lang_name_ru);
 		_supportedLocalesRes.put("zh", R.string.lang_name_zh);
-		_supportedLocalesRes.put("ko", R.string.lang_name_ko);
+		//_supportedLocalesRes.put("ko", R.string.lang_name_ko);
 
 		if (BuildConfig.DEBUG) {
 			_updateIntervals.add(TimeSpan.fromMinutes(0.2));
@@ -179,6 +193,34 @@ public final class AppSettings {
 
 	public synchronized boolean getFirstStart() {
 		return !_sharedPreferences.contains(PREF_BOOL_FIRST_START);
+	}
+
+	public void removeFirstStart() {
+		_sharedPreferences.edit().remove(PREF_BOOL_FIRST_START).apply();
+	}
+
+	//endregion
+
+	//region switched to mainnet
+	public synchronized boolean getSwitchedToMainnet() {
+		return _sharedPreferences.contains(PREF_BOOL_SWITCHED_TO_MAINNET);
+	}
+
+	public synchronized void setSwitchedToMainnet() {
+		_sharedPreferences.edit()
+				.putBoolean(PREF_BOOL_SWITCHED_TO_MAINNET, true)
+				.apply();
+	}
+	//endregion
+
+	//region mainnet warning confirm
+
+	public void setMainnetWarningAccepted() {
+		_sharedPreferences.edit().putBoolean(PREF_BOOL_MAINNET_WARNING_ACCEPTED, true).commit();
+	}
+
+	public boolean getMainnetWarningAccepted() {
+		return _sharedPreferences.contains(PREF_BOOL_MAINNET_WARNING_ACCEPTED);
 	}
 	//endregion
 
@@ -267,6 +309,13 @@ public final class AppSettings {
 
 	public Server[] getPredefinedServers() { // Predefined, don't have to do read check
 		return _predefinedServers;
+	}
+
+	/**
+	 * Warning, it's dangerous!
+	 */
+	public void deleteSharedPreferences() {
+		_sharedPreferences.edit().clear().commit();
 	}
 	//endregion
 }

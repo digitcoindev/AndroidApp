@@ -6,8 +6,8 @@ import android.content.Intent;
 
 import org.nem.nac.common.enums.LastTransactionType;
 import org.nem.nac.datamodel.repositories.LastTransactionRepository;
-import org.nem.nac.models.transactions.DismissTransactionIntentExtra;
 import org.nem.nac.models.transactions.LastTransaction;
+import org.nem.nac.models.transactions.NotificationDismissMetadata;
 
 import java.util.ArrayList;
 
@@ -20,8 +20,8 @@ public final class NotificationDeleteReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
 		Timber.d("Notification dismissed");
-		final ArrayList<DismissTransactionIntentExtra> dismissedTransactions =
-				intent.<DismissTransactionIntentExtra>getParcelableArrayListExtra(EXTRA_PARC_ARR_LAST_NOTIFIED_TRANSACTIONS);
+		final ArrayList<NotificationDismissMetadata> dismissedTransactions =
+				intent.<NotificationDismissMetadata>getParcelableArrayListExtra(EXTRA_PARC_ARR_LAST_NOTIFIED_TRANSACTIONS);
 		if (dismissedTransactions == null || dismissedTransactions.isEmpty()) {
 			Timber.w("Notification dismissed without supplied transaction information");
 			return;
@@ -31,7 +31,7 @@ public final class NotificationDeleteReceiver extends BroadcastReceiver {
 		new Thread(() -> {
 			try {
 				final LastTransactionRepository lastSeenRepo = new LastTransactionRepository();
-				for (DismissTransactionIntentExtra transaction : dismissedTransactions) {
+				for (NotificationDismissMetadata transaction : dismissedTransactions) {
 					if (transaction.address == null) {
 						Timber.e("Address was null!");
 						continue;

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 	<string name="title_activity_create_account">Sukurti sąskaitą</string>
 	<string name="title_activity_account_list">Sąskaitos</string>
 	<string name="errormessage_account_name_empty">Įveskite savo vardą</string>
@@ -38,7 +37,7 @@
 	<string name="nem_contact_type">NEM</string>
 	<string name="content_description_icon">Piktograma</string>
 	<string name="content_description_delete_icon">Pašalinti</string>
-	<string name="placeholder_encrypted_message">&lt;Šifruota></string>
+	<string name="placeholder_encrypted_message">&lt;Šifruota&gt;</string>
 	<string name="errormessage_decryption_failed">Įvyko klaida iššifruojant!</string>
 	<string name="content_description_splash_image">Ekrano vaizdas</string>
 	<string name="input_hint_min_cosignatories">Minimalus pasirašančiųjų kiekis</string>
@@ -74,7 +73,7 @@
 	<string name="action_chooser_share_invoice">Pasidalinti sąskaita</string>
 	<string name="message_account_imported">%1$s importuota</string>
 	<string name="errormessage_failed_to_init_camera">Įvyko klaida inicializuojant kamerą! Gali būti, kad ji yra blokuojama kitos programėlės.</string>
-	<string name="errormessage_host_empty">Host negli būti tuščias</string>
+	<string name="errormessage_host_empty">Host negali būti tuščias</string>
 	<string name="errormessage_invalid_hostname">Neteisingas host\'o pavadinimas</string>
 	<string name="errormessage_port_required">Prievado numeris yra reikalingas</string>
 	<string name="errormessage_invalid_port_range">Neteisingas prievado numeris (1–65535)</string>
@@ -129,12 +128,12 @@
 	<string name="placeholder_recipient_addr">Įveskite adresą</string>
 	<string name="label_amount_with_balance_part_1">Suma (Balansas:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Mokestis (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Mokestis (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Įveskite mokestį</string>
 	<string name="toolbar_btn_new">Naujas</string>
 	<string name="errormessage_not_allowed">Neleidžiama</string>
 	<string name="errormessage_fee_less_than_min">Mokestis buvo mažesnis už minimalų</string>
-	<string name="errormessage_failed_to_import_account">Įvyko klaida importuojant sąskaitą</string>
+	<string name="errormessage_failed_to_import_account">Importavimas neįvyko\nNeteisingas slaptažodis</string>
 	<string name="btn_share_qr">Pasidalinti QR</string>
 	<string name="email_body_share_account">Skenuoti šį QR, norint importuoti sąskaitą %s.</string>
 	<string name="email_subject_share_account">NEM eksportuota sąskaita: %s</string>
@@ -156,7 +155,7 @@
 	<string name="action_chooser_share_address">NEM adresas</string>
 	<string name="message_copy_complete">Nukopijuota</string>
 	<string name="title_activity_invoice">Sąskaita</string>
-	<string name="label_invoice_data">Sąskaitos data</string>
+	<string name="label_invoice_data">Sąskaitos duomenys</string>
 	<string name="label_invoice_name_colon">Vardas:</string>
 	<string name="label_invoice_amount_colon">Suma:</string>
 	<string name="label_invoice_message_colon">Žinutė:</string>
@@ -167,7 +166,7 @@
 	<string name="more_item_multisig">Multisig</string>
 	<string name="dialog_message_multisig_cannot_manage_cosigs">Multisig sąskaita negali tiesiogiai valdyti pasirašančiųjų</string>
 	<string name="input_hint_new_cosigner">Įveskite adresą arba žymę</string>
-	<string name="btn_add_cosigners">Pridoėti papildomus pasirašančiuosius</string>
+	<string name="btn_add_cosigners">Pridėti papildomus pasirašančiuosius</string>
 	<string name="btn_confirm_add_cosigs">Patvirtinti</string>
 	<string name="errormessage_no_cosigs_to_add">Nėra ką pridėti</string>
 	<string name="dialog_message_aborting_no_public_key">Tęsti negalima:\nsąskaita neturi viešo rakto</string>
@@ -187,7 +186,7 @@
 	<string name="title_activity_select_sender">Pasirinkti siuntėją</string>
 	<string name="title_activity_harvest_details">\"Kalimo\" detali informacija</string>
 	<string name="more_item_harvest_details">\"Kalimo\" detali informacija</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">\"Kalimo\" balansas: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Deleguotas \"kalimas\": %1$s</string>
 	<string name="label_balance">Balansas: %s XEM</string>
@@ -217,7 +216,7 @@
 	<string name="config_item_invoice_message">Saskaitos žinutė</string>
 	<string name="dialog_title_invoice_message">Nustatyti sąskaitos žinutę</string>
 	<string name="invoice_number_separator">/</string>
-	<string name="dialog_title_updates_check_interval">Tikrinti atnaujinimų kas</string>
+	<string name="dialog_title_updates_check_interval">Tikrinti atnaujinimus kas</string>
 	<string name="label_minutes">%1$s min</string>
 	<string name="label_hours">%1$s valandas</string>
 	<string name="label_never">Niekada</string>
@@ -230,19 +229,19 @@
 	<string name="btn_i_understand">Suprantu</string>
 	<string name="label_private_key">Privatus raktas:</string>
 	<string name="server_result_code_success">Sėkmingai</string>
-	<string name="server_result_code_unknown_failure">Nešinoma klaida</string>
+	<string name="server_result_code_unknown_failure">Nežinoma klaida</string>
 	<string name="server_result_code_deadline_too_far">Galiojimo pabaigos reikšmė nustatyta per daug toli į ateitį</string>
 	<string name="server_result_code_insufficient_balance">Nepakanka lėšų</string>
 	<string name="server_result_code_message_too_large">Su tranzakcija pateikta žinutė yra per ilga</string>
 	<string name="server_result_code_hash_already_in_db">\"hash\" jau yra duomenų bazėje</string>
 	<string name="server_result_code_cannot_validate_signature">Parašas negali būti patvirtintas</string>
 	<string name="server_result_code_unusable_entity">Reikšmė nenaudojama</string>
-	<string name="server_result_code_score_inferior">Nuotolinė blokų grandinės rezultatas yra mažesnis (nors pranašesnis rezultatas buvo žadėtas)</string>
+	<string name="server_result_code_score_inferior">Nuotolinės blokų grandinės rezultatas yra mažesnis (nors pranašesnis rezultatas buvo žadėtas)</string>
 	<string name="server_result_code_blockchain_validation_failed">Nepavyko patvirtinti nuotolinės blokų grandinės</string>
 	<string name="server_result_code_conflicting_importance_transfer">Pastebėtas konfliktinis svarbumo perdavimas</string>
 	<string name="server_result_code_too_many_transactions_in_block">Pateiktame bloke buvo per daug tranzakcijų</string>
 	<string name="server_result_code_transaction_signed_by_harvester">Bloke yra tranzakcija, kurią pasirašė \"kalėjas\"</string>
-	<string name="server_result_code_previous_importance_transaction_conflict">Prieš tai buvės svarbumo perdavimas konfliktuoja su nauja tranzakcija</string>
+	<string name="server_result_code_previous_importance_transaction_conflict">Prieš tai buvęs svarbumo perdavimas konfliktuoja su nauja tranzakcija</string>
 	<string name="server_result_code_previous_importance_transfer_active">Buvo bandoma aktyvuoti svarbumo perdavimas, kol prieš tai buvęs vis dar aktyvus</string>
 	<string name="server_result_code_importance_transfer_not_active">Buvo bandoma deaktyvuoti svarbumo perdavimą, bet jis nėra aktyvus</string>
 	<string name="server_result_code_unknown_status">Nežinoma būsena</string>
@@ -307,4 +306,22 @@
 	<string name="errormessage_failed_to_prepare_transaction">Įvyko klaida ruošiant tranzakciją!</string>
 	<string name="dialog_message_no_network">Nėra tinklo ryšio</string>
 	<string name="btn_wifi_settings">WiFi nustatymai</string>
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> iš %2$s pasirašančiųjų</string>
+	<string name="tran_info_min_signers_count">Minimum %1$s pasirašančiųjų</string>
+	<string name="title_activity_unconfirmed_list">Nepatvirtinta</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">Parodyti pakeitimus</string>
+	<string name="dialog_message_have_unconfirmed">Jūs turite nepatvirtintų transakcijų, kurios turi būti pasirašytos.\nPeržiūrėti jas?</string>
+	<string name="btn_show_unconfirmed">Parodyti</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">Informacija</string>
+	<string name="unconfirmed_info_account">&lt;b>Sąskaita:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>Pašalinta:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>Pridėta:&lt;/b></string>
+	<string name="label_unconfirmed_date">Nepatvirtinta</string>
+	<string name="debug_log_file_deleted">Pašalinta</string>
+	<string name="debug_hint_report_comment">Komentaras</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">Ši versija yra beta testinė versija.\nNEM komanda neatsako, jei bus prarastos lėšos, nes aplikacija vis dar testuojama.\nNaudotojai atsako už savo lėšas ir privalo saugiai laikyti savo privatų raktą.\nNenaudokite aplikacijos, jei neesate įsitikinę, kad lėšos yra saugiai laikomos. Mes siūlome saugoti privatų raktą užrašytą ant popieriaus ir laikyti jį saugioje vietoje. Papildomai, Jūs galite importuoti savo sąskaitas į Lightwallet/NCC/NanoWallet.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">Aš perskaičiau ir supratau šį įspėjimą ir turiu išsaugojęs privačius raktus.</string>
+	<string name="dialog_title_mainnet_warning">Įspėjimas</string>
 </resources>

@@ -43,12 +43,13 @@ public final class AccountListActivity extends NacBaseActivity {
 		context.startActivity(intent);
 	}
 
-	private DragNDropListView _accountsListview;
+	private DragNDropListView  _accountsListview;
 	private AccountListAdapter _accountsAdapter;
 	private Snackbar           _undoSnackbar;
 	private View               _toolbarRightPanel;
 	private TextView           _toolbarRightLabel;
 	private final List<Long> _toDelete = new ArrayList<>();
+	private String _undoAccountName;
 
 	@Override
 	protected int getLayoutId() {
@@ -125,7 +126,7 @@ public final class AccountListActivity extends NacBaseActivity {
 	}
 
 	private void onConfigurationClick(final View clicked) {
-		// start configuration activity
+		startActivity(new Intent(this, ConfigurationActivity.class));
 	}
 
 	private void onAddAccountBtnClick(final View clicked) {
@@ -146,6 +147,10 @@ public final class AccountListActivity extends NacBaseActivity {
 			_toolbarRightLabel.setText(_accountsAdapter.getIsEditMode()
 					? R.string.toolbar_btn_done
 					: R.string.toolbar_btn_edit);
+			if (!_accountsAdapter.getIsEditMode()) {
+				deletePendingAccounts();
+				if (_undoSnackbar != null) { _undoSnackbar.dismiss(); }
+			}
 		}
 		if (_accountsListview != null) {
 			_accountsListview.post(_accountsListview::invalidateViews);
@@ -186,20 +191,39 @@ public final class AccountListActivity extends NacBaseActivity {
 	}
 
 	private void onItemDeleteClick(final AccountListAdapter.AccountItem account) {
-		String name = account.name;
+		_undoAccountName = account.name;
 		_toDelete.add(account.id);
 		_accountsAdapter.hideAccount(account.id);
 		if (_undoSnackbar != null) {
-			_undoSnackbar.setText(StringUtils.format(R.string.message_account_deleted, name));
+			_undoSnackbar.setText(StringUtils.format(R.string.message_account_deleted, account.name));
 		}
 		else {
-			_undoSnackbar =
-					Snackbar.make(findViewById(R.id.layout_coordinator), StringUtils.format(R.string.message_account_deleted, name), Snackbar.LENGTH_INDEFINITE)
+			_undoSnackbar = createUndoSnackbar();
+		}
+
+		_undoSnackbar.show();
+	}
+
+	private Snackbar createUndoSnackbar() {
+		final Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_coordinator),
+				StringUtils.format(R.string.message_account_deleted, StringUtils.isNotNullOrEmpty(_undoAccountName)
+						? _undoAccountName
+						: ""), Snackbar.LENGTH_INDEFINITE)
 							.setAction(R.string.action_undo, this::onUndoDeleteClick)
 							.setActionTextColor(getResources().getColor(R.color.official_green));
-			_undoSnackbar.getView().setBackgroundColor(getResources().getColor(R.color.background_material_dark));
-		}
+		snackbar.getView().setBackgroundColor(getResources().getColor(R.color.background_material_dark));
+		snackbar.setCallback(new Snackbar.Callback() {
+				@Override
+				public void onDismissed(final Snackbar snackbar, final int event) {
+					super.onDismissed(snackbar, event);
+					if (_toDelete.isEmpty()) { return; }
+					getHandler().post(() -> {
+						_undoSnackbar = createUndoSnackbar();
 		_undoSnackbar.show();
+					});
+				}
+		});
+		return snackbar;
 	}
 
 	private void onUndoDeleteClick(final View clicked) {

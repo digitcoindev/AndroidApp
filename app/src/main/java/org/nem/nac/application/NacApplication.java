@@ -8,17 +8,18 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.annimon.stream.Optional;
 
 import org.acra.ACRA;
-import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.acra.sender.HttpSender;
 import org.nem.nac.R;
 import org.nem.nac.common.TimeSpan;
+import org.nem.nac.common.exceptions.NacException;
 import org.nem.nac.common.exceptions.NacRuntimeException;
 import org.nem.nac.common.utils.LogUtils;
 import org.nem.nac.datamodel.NemSQLiteHelper;
@@ -43,26 +44,17 @@ import java.util.TimeZone;
 
 import timber.log.Timber;
 
-@ReportsCrashes(formUri = "http://artygeek.net:8006/api/bugs/add",
-//@ReportsCrashes(formUri = "http://artygeek.net:30202/api/bugs/add",
-		httpMethod = HttpSender.Method.POST,
+@ReportsCrashes(
+		httpMethod = HttpSender.Method.PUT,
 		reportType = HttpSender.Type.JSON,
+		formUri = "http://193.84.22.102:8007/acra-nemapp/_design/acra-storage/_update/report",
+		formUriBasicAuthLogin = "reporter1",
+		formUriBasicAuthPassword = "123456",
 		mode = ReportingInteractionMode.TOAST,
 		buildConfigClass = org.nem.nac.BuildConfig.class,
-		sendReportsInDevMode = true,
-		applicationLogFile = AppConstants.LOG_FILE_NAME,
-		applicationLogFileLines = 150,
-		forceCloseDialogAfterToast = true,
-		resToastText = R.string.crash_report_toast_text,
-		customReportContent = {
-				ReportField.ANDROID_VERSION,
-				ReportField.APP_VERSION_NAME,
-				ReportField.APPLICATION_LOG,
-				ReportField.BRAND,
-				ReportField.PHONE_MODEL,
-				ReportField.LOGCAT,
-				ReportField.STACK_TRACE
-		}
+		//applicationLogFile = AppConstants.LOG_FILE_NAME,
+		//applicationLogFileLines = 150,
+		resToastText = R.string.crash_report_toast_text
 )
 public final class NacApplication extends Application {
 
@@ -101,11 +93,17 @@ public final class NacApplication extends Application {
 	};
 
 	@Override
+	protected void attachBaseContext(final Context base) {
+		super.attachBaseContext(base);
+		MultiDex.install(this);
+		ACRA.init(this);
+	}
+
+	@Override
 	public void onCreate() {
 		super.onCreate();
 		// Note: this won't work with all ACRA configurations cause ACRA not always pass control to default handler
-		Thread.setDefaultUncaughtExceptionHandler(new ThreadExceptionHandler());
-		ACRA.init(this);
+		//Thread.setDefaultUncaughtExceptionHandler(new ThreadExceptionHandler());
 		_appContext = this.getApplicationContext();
 		Timber.plant(new FileLoggingTree());
 
@@ -123,7 +121,20 @@ public final class NacApplication extends Application {
 		setActivityLifecycleCallbacks();
 
 		final AppSettings appSettings = AppSettings.instance();
-		if (appSettings.getFirstStart()) {
+		final boolean switchedToMainnet = appSettings.getSwitchedToMainnet();
+		if (!switchedToMainnet) {
+			Timber.w("Removing preferences due to switching to mainnet");
+			appSettings.deleteSharedPreferences();
+			appSettings.setSwitchedToMainnet();
+			try {
+				NemSQLiteHelper.getInstance().getWritableDbCompartment(); // init/upgrade database
+			} catch (NacException e) {
+				Timber.e(e, "Failed to init database");
+			}
+		}
+		//
+		if (appSettings.getFirstStart() || !switchedToMainnet) {
+			Timber.i("Adding default servers");
 			final Server[] predefinedServers = appSettings.getPredefinedServers();
 			final ServerManager serverManager = ServerManager.instance();
 			for (Server server : predefinedServers) {

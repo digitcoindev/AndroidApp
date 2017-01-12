@@ -15,6 +15,8 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -271,6 +273,24 @@ public abstract class NacBaseActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		onBeforeSetContent(savedInstanceState);
 		setContentView(getLayoutId());
+		//
+		final View appBarLayout = findViewById(R.id.appBarLayout);
+		if (appBarLayout != null) {
+			appBarLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+				CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)appBarLayout.getLayoutParams();
+				if (params != null) {
+					final AppBarLayout.Behavior behavior = (AppBarLayout.Behavior)params.getBehavior();
+					if (behavior != null) {
+						behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+							@Override
+							public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+								return false;
+							}
+						});
+					}
+				}
+			});
+		}
 		//
 		final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_top);
 		if (toolbar != null) {

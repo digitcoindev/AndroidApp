@@ -443,7 +443,7 @@ public final class NewTransactionActivity extends NacBaseActivity {
 						: message.toString().getBytes().length;
 		final Xems minFee = TransferTransactionDraft.calculateMinimumFee(amount, payloadLength);
 
-		final String feeLabelStr = String.format("Fee (Min <font color=\"#%1$s\">%2$s</font> XEM):",
+		final String feeLabelStr = getString(R.string.label_fee_colon,
 				Integer.toHexString(getResources().getColor(R.color.official_green) & 0x00ffffff),
 				NumberUtils.toString(minFee.getAsFractional()));
 		_feeLabel.setText(Html.fromHtml(feeLabelStr));
