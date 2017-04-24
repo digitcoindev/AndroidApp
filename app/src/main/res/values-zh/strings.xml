@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 	<string name="title_activity_create_account">新建账号</string>
 	<string name="title_activity_account_list">账号</string>
 	<string name="errormessage_account_name_empty">请输入你的名字</string>
@@ -129,12 +128,12 @@
 	<string name="placeholder_recipient_addr">输入地址</string>
 	<string name="label_amount_with_balance_part_1">总额（余额:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">费用 (最小 %1$s XEM):</string>
+	<string name="label_fee_colon">费用 (最小 &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">输入费用</string>
 	<string name="toolbar_btn_new">新增</string>
 	<string name="errormessage_not_allowed">未被允许</string>
 	<string name="errormessage_fee_less_than_min">费用少于最小要求</string>
-	<string name="errormessage_failed_to_import_account">导入账号失败</string>
+	<string name="errormessage_failed_to_import_account">导入失败\n密码错误</string>
 	<string name="btn_share_qr">分享二维码</string>
 	<string name="email_body_share_account">扫描该二维码以导入账号 %s。</string>
 	<string name="email_subject_share_account">NEM 已导出账号： %s</string>
@@ -187,7 +186,7 @@
 	<string name="title_activity_select_sender">选择发送者</string>
 	<string name="title_activity_harvest_details">收获详细信息</string>
 	<string name="more_item_harvest_details">收获详细信息</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">归属余额: %1$s XEM</string>
 	<string name="label_delegated_harvesting">委托收获: %1$s</string>
 	<string name="label_balance">余额: %s XEM</string>
@@ -258,8 +257,8 @@
 	<string name="server_result_code_unknown_result">未知结果</string>
 	<string name="server_result_code_failure_transaction_not_allowed_for_multisig">交易未被多重签名批准</string>
 	<string name="server_result_code_multisig_already_a_cosigner">已经有一个签署人</string>
-	<string name="server_result_code_failure_multisig_not_a_cosigner">Not a cosigner</string>
-	<string name="server_result_code_failure_multisig_modification_multiple_deletes">It is only allowed to remove one cosignatory at a time.</string>
+	<string name="server_result_code_failure_multisig_not_a_cosigner">您不是共签人</string>
+	<string name="server_result_code_failure_multisig_modification_multiple_deletes">一次仅允许删除一个共签人</string>
 	<string name="label_public_key">公钥：</string>
 	<string name="dialog_title_edit_account">编辑账号</string>
 	<string name="message_saved">保存</string>
@@ -304,7 +303,25 @@
 	<string name="errormessage_min_cosigs_too_big">最小签署人数量不能大于签署人总数</string>
 	<string name="dialog_title_edit_contact">编辑联系人</string>
 	<string name="errormessage_non_existing_contact">错误：联系人不存在</string>
-	<string name="errormessage_failed_to_prepare_transaction">Failed to prepare transaction!</string>
-	<string name="dialog_message_no_network">No network connection</string>
-	<string name="btn_wifi_settings">WiFi Settings</string>
+	<string name="errormessage_failed_to_prepare_transaction">&lt;font color="#41ce7b">%1$d&lt;/font> of %2$s </string>
+	<string name="dialog_message_no_network">无网络连接</string>
+	<string name="btn_wifi_settings">WiFi配置</string>
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> of %2$s 签署人</string>
+	<string name="tran_info_min_signers_count">最少 %1$s 名签署人</string>
+	<string name="title_activity_unconfirmed_list">未确认</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">显示变更</string>
+	<string name="dialog_message_have_unconfirmed">您仍有未签署的事务。\n查看？</string>
+	<string name="btn_show_unconfirmed">显示</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">信息</string>
+	<string name="unconfirmed_info_account">&lt;b>账户:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>删除:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>添加:&lt;/b></string>
+	<string name="label_unconfirmed_date">未确认日期</string>
+	<string name="debug_log_file_deleted">已删除</string>
+	<string name="debug_hint_report_comment">注解</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">当前版本是Beta测试版。\nNEM团队对任何资金的丢失不负有责任。\n用户需知晓风险并备份一切有资金的账户。\n在确认备份妥当之前不要使用。我们推荐抄下私钥并放置在安全保管设施中。您也可以将账户导入至NCC中异机保管。</string>
+	<string name="label_checkbox_confirm_mainnet_warning">我已阅读和知晓以上警告并已将做好私钥备份</string>
+	<string name="dialog_title_mainnet_warning">警告</string>
 </resources>

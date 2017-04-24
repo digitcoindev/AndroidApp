@@ -2,7 +2,7 @@
 <manifest
 	package="org.nem.nac"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:sharedUserId="org.nem">
+	>
 
 	<uses-permission android:name="android.permission.CAMERA"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
@@ -12,7 +12,8 @@
 	<uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 	<!-- This permission for bug reporter -->
 	<uses-permission android:name="android.permission.READ_LOGS"/>
-	<!-- Allows the API to cache map tile data in the device's external storage area. -->
+
+	<!--For sharing QRs-->
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 	<uses-feature
@@ -25,20 +26,12 @@
 		android:name="android.hardware.camera.front"
 		android:required="false"/>
 
-	<!-- The Google Maps Android API uses OpenGL ES version 2 to render the map. If OpenGL ES version 2 is not installed, your map will not appear. -->
-	<uses-feature
-		android:glEsVersion="0x00020000"
-		android:required="true"/>
-
 	<application
 		android:name=".application.NacApplication"
 		android:allowBackup="true"
-		android:icon="@mipmap/ic_launcher"
+		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme">
-		<meta-data
-			android:name="com.google.android.geo.API_KEY"
-			android:value="AIzaSyCyjYJ7dRgq6un0zAiRj3X98Qy4cLG2uI8"/>
 
 		<receiver android:name=".notifications.AlarmReceiver"/>
 		<receiver
@@ -176,6 +169,23 @@
 			android:label="@string/title_activity_select_sender"
 			android:screenOrientation="portrait"
 			android:theme="@style/AppDialogTheme">
+		</activity>
+		<activity
+			android:name=".ui.activities.HarvestDetailsActivity"
+			android:label="@string/title_activity_harvest_details"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme">
+		</activity>
+		<activity
+			android:name=".ui.activities.ConfigurationActivity"
+			android:label="@string/title_activity_configuration"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme">
+		</activity>
+		<activity
+			android:name=".ui.activities.LogActivity"
+			android:label="@string/title_activity_log"
+			android:theme="@style/AppTheme">
 		</activity>
 		<activity
 			android:name=".ui.activities.UnconfirmedListActivity"

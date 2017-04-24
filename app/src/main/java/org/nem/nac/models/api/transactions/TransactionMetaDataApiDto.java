@@ -1,21 +1,20 @@
 package org.nem.nac.models.api.transactions;
 
 import org.nem.nac.common.models.HashValue;
-import org.nem.nac.models.BlockHeight;
 
 public final class TransactionMetaDataApiDto {
 	/**
 	 * The height of the block in which the transaction was included.
 	 */
-	public BlockHeight height;
+	public long      height;
 	/**
 	 * The id of the transaction.
 	 */
-	public int         id;
+	public int       id;
 	/**
 	 * The transaction hash.
 	 */
-	public HashValue   hash;
+	public HashValue hash;
 
 	@Override
 	public int hashCode() {

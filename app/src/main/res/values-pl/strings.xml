@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 	<string name="title_activity_create_account">Utwórz konto</string>
 	<string name="title_activity_account_list">Konta</string>
 	<string name="errormessage_account_name_empty">Wpisz swoje imię</string>
@@ -120,7 +119,7 @@
 	<string name="title_activity_messages">Wiadomości</string>
 	<string name="errormessage_account_not_selected">Konto nie wybrane</string>
 	<string name="btn_send">Wyślij</string>
-	<string name="text_due_to">Wygasa za %1$s</string>
+	<string name="text_due_to">Wygasa %1$s</string>
 	<string name="placeholder_empty_transaction">&lt;Pusta transakcja></string>
 	<string name="message_decrypting_in_progress">Deszyfrowanie…</string>
 	<string name="errormessage_failed_to_encrypt_msg_no_public_key">Nie udało się zaszyfrować wiadomości.\nKonto nie ma klucza publicznego</string>
@@ -129,12 +128,12 @@
 	<string name="placeholder_recipient_addr">Wpisz Adres</string>
 	<string name="label_amount_with_balance_part_1">Ilość (Saldo:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Opłata (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Opłata (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Opłata</string>
 	<string name="toolbar_btn_new">Nowa</string>
 	<string name="errormessage_not_allowed">Niedozwolone</string>
 	<string name="errormessage_fee_less_than_min">Opłata mniejsza od minimalnej</string>
-	<string name="errormessage_failed_to_import_account">Nie udało się importować konta</string>
+	<string name="errormessage_failed_to_import_account">Importowanie nie powiodło się\nNieprawidłowe hasło</string>
 	<string name="btn_share_qr">Wyślij kod QR</string>
 	<string name="email_body_share_account">Zeskanuj ten kod QR aby importować konto %s.</string>
 	<string name="email_subject_share_account">Konto Eksportowane NEM: %s</string>
@@ -187,7 +186,7 @@
 	<string name="title_activity_select_sender">Wybierz Nadawcę</string>
 	<string name="title_activity_harvest_details">Szczególy Harvestu</string>
 	<string name="more_item_harvest_details">Szczegóły Harvestu </string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">Saldo Usankcjonowane: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Delegowane Zbieranie: %1$s</string>
 	<string name="label_balance">Saldo: %s XEM</string>
@@ -205,7 +204,7 @@
 	<string name="configuration_header_server_settings">Ustawienia Serwera</string>
 	<string name="config_item_servers">Serwery</string>
 	<string name="configuration_header_notifications">Powiadomienia</string>
-	<string name="config_item_notifications_interval">Częstość aktualizacji</string>
+	<string name="config_item_notifications_interval">Aktualizacja co</string>
 	<string name="errormessage_malformed_qr">Zniekształcony kod QR</string>
 	<string name="crash_report_toast_text">Klient NEM uległ awarii, wysyłanie raportu…</string>
 	<string name="dialog_option_add_to_address_book">Dodaj do książki adresowej</string>
@@ -223,7 +222,7 @@
 	<string name="label_never">Nigdy</string>
 	<string name="message_qr_older_version">Nie można zeskanować: Kod QR jest nieaktualny</string>
 	<string name="message_qr_newer_version">Nie można zeskanować: Twoja aplikacja jest nieaktualna</string>
-	<string name="notification_updates_title">Aktualizacje NEM</string>
+	<string name="notification_updates_title">Powiadomienia</string>
 	<string name="notification_updates_text">Nowe transakcje dla %1$s: %2$d</string>
 	<string name="btn_show_private_key">Pokaż Klucz Prywatny</string>
 	<string name="message_private_key_exposure_warning_html">Ważnym jest, aby zrozumieć, że klucz prywatny jest najważniejszą i najwrażliwszą częścią Twojego konta.&lt;br/>&lt;br/>Każdy kto zna klucz prywatny, ma &lt;font color="#7D1010">pełną kontrolę nad kontem i jego funduszami&lt;/font>.&lt;br/>&lt;br/>Ważne jest, aby zabezpieczyć klucz prywatny, aby nie zginął,ale także aby &lt;font color="#7D1010">dobrze go ukryć.&lt;/font></string>
@@ -258,7 +257,7 @@
 	<string name="server_result_code_unknown_result">Nieznany wynik</string>
 	<string name="server_result_code_failure_transaction_not_allowed_for_multisig">Transakcja nie jest dostępna dla Multisig</string>
 	<string name="server_result_code_multisig_already_a_cosigner">Jest już sygnatariuszem</string>
-	<string name="server_result_code_failure_multisig_not_a_cosigner">Nie jest sygnatariuszem.</string>
+	<string name="server_result_code_failure_multisig_not_a_cosigner">Nie jest sygnatariuszem</string>
 	<string name="server_result_code_failure_multisig_modification_multiple_deletes">Można usunąć tylko jednego sygnatariusza za jednym razem.</string>
 	<string name="label_public_key">Klucz Publiczny:</string>
 	<string name="dialog_title_edit_account">Edytuj Konto</string>
@@ -307,4 +306,22 @@
 	<string name="errormessage_failed_to_prepare_transaction">Nie udało się przygotować transakcji!</string>
 	<string name="dialog_message_no_network">Brak połączenia</string>
 	<string name="btn_wifi_settings">Ustawienia WiFi</string>
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> z %2$s Sygnatariuszy</string>
+	<string name="tran_info_min_signers_count">Min %1$s Sygnatariuszy</string>
+	<string name="title_activity_unconfirmed_list">Niepotwierdzone</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">Wyświetl zmiany</string>
+	<string name="dialog_message_have_unconfirmed">Masz niezatwierdzone transakcje, które trzeba potwierdzić.\nWyświetlić je?</string>
+	<string name="btn_show_unconfirmed">Wyświetl</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">Info</string>
+	<string name="unconfirmed_info_account">&lt;b>Konto:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>Usunięto:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>Dodano:&lt;/b></string>
+	<string name="label_unconfirmed_date">Niepotwierdzone</string>
+	<string name="debug_log_file_deleted">Usunięty</string>
+	<string name="debug_hint_report_comment">Komentarz</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">To jest testowa wersja beta.\nZespół NEM nie ponosi odpowiedzialności za jakiekolwiek straty funduszy ze względu na testowanie aplikacji.\nUżytkownicy są odpowiedzialni za swoje fundusze i zabezpieczenie kluczy prywatnych.\nNie używaj aplikacji, chyba że masz pewność, że wszystkie fundusze są zabezpieczone. Proponujemy zapisać klucze prywatne na papierze i przechowywać je w bezpiecznym miejscu. Dodatkowo można importować konto do portfela Lightwallet/NCC/NanoWallet.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">Przeczytałem i zrozumiałem to ostrzeżenie, i zarchiwizuję moje klucze prywatne.</string>
+	<string name="dialog_title_mainnet_warning">Ostrzeżenie</string>
 </resources>

@@ -36,16 +36,25 @@ public final class AccountRepository {
 		}
 	}
 
-	public synchronized List<Account> getAllSorted()
-			throws NacPersistenceRuntimeException {
+	public synchronized List<Account> getAll() {
 		try {
 			final List<AccountEntity> entities = NemSQLiteHelper.getInstance().getAll(AccountEntity.class);
 			List<Account> models = new ArrayList<>(entities.size());
 			for (AccountEntity entity : entities) {
 				models.add(AccountMapper.toModel(entity));
 			}
-			Collections.sort(models, (lhs, rhs) -> lhs.sortIndex - rhs.sortIndex);
 			return models;
+		} catch (Exception e) {
+			throw new NacPersistenceRuntimeException("Persistence operation failed", e);
+		}
+	}
+
+	public synchronized List<Account> getAllSorted()
+			throws NacPersistenceRuntimeException {
+		try {
+			final List<Account> accounts = getAll();
+			Collections.sort(accounts, (lhs, rhs) -> lhs.sortIndex - rhs.sortIndex);
+			return accounts;
 		} catch (Exception e) {
 			throw new NacPersistenceRuntimeException("Persistence operation failed", e);
 		}

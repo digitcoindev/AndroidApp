@@ -1,6 +1,7 @@
 package org.nem.nac.common.utils;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,24 +65,20 @@ public final class LogUtils {
 		int index = 0;
 		final String assembledMessage = String.format(message, args);
 		if (assembledMessage.length() <= maxChars) {
-			Timber.tag(tag);
-			Timber.log(priority, assembledMessage);
+			Log.println(priority, tag, assembledMessage);
 			return;
 		}
 		List<String> strings = new ArrayList<>();
-		Timber.tag(tag);
-		Timber.log(priority, "Start >");
+		Log.println(priority, tag, "> Start");
 		while (index < assembledMessage.length()) {
 			final String substring = assembledMessage.substring(index, Math.min(index + maxChars, assembledMessage.length()));
 			strings.add(substring);
 			index += maxChars;
 		}
 		for (String str : strings) {
-			Timber.tag(tag);
-			Timber.log(priority, "> " + str);
+			Log.println(priority, tag, "> " + str);
 		}
-		Timber.tag(tag);
-		Timber.log(priority, "End <");
+		Log.println(priority, tag, "< End");
 	}
 
 	public interface MessageFactory {

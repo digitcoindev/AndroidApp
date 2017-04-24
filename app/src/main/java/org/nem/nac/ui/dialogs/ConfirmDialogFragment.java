@@ -17,9 +17,8 @@ public final class ConfirmDialogFragment extends NacBaseDialogFragment {
 
 	private static final String ARG_STR_MESSAGE = "arg-message-str";
 
-	private
 	@StringRes
-	String _message;
+	private String _message;
 
 	public static ConfirmDialogFragment create(boolean isCancelable, final @StringRes Integer titleRes, final @StringRes int messageRes,
 			@Nullable final @StringRes Integer confirmTextResOverride) {

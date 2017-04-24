@@ -57,11 +57,11 @@ public abstract class NacBaseDialogFragment extends DialogFragment {
 	protected boolean callOnCreateView = true;
 	protected String                    title;
 	private   String                    _confirmTextOverride;
-	protected Consumer<DialogInterface> confirmClickListener;
+	protected ConfirmListener           confirmClickListener;
 	protected Consumer<DialogInterface> cancelListener;
 	protected Consumer<DialogInterface> dismissListener;
 
-	public NacBaseDialogFragment setOnConfirmListener(final Consumer<DialogInterface> listener) {
+	public NacBaseDialogFragment setOnConfirmListener(final ConfirmListener listener) {
 		this.confirmClickListener = listener;
 		return this;
 	}
@@ -137,9 +137,13 @@ public abstract class NacBaseDialogFragment extends DialogFragment {
 	@CallSuper
 	protected void onConfirmClick(final View clicked) {
 		if (confirmClickListener != null) {
-			confirmClickListener.accept(getDialog());
+			if (confirmClickListener.onConfirmClick(getDialog())) {
+				dismiss();
+			}
 		}
-		dismiss();
+		else {
+			dismiss();
+		}
 	}
 
 	@Override
@@ -196,5 +200,13 @@ public abstract class NacBaseDialogFragment extends DialogFragment {
 		}
 		//
 		return layout;
+	}
+
+	public interface ConfirmListener {
+
+		/**
+		 * Should return true to allow dialog to be dismissed.
+		 */
+		boolean onConfirmClick(final DialogInterface dialog);
 	}
 }

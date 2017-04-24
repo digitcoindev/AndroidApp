@@ -8,6 +8,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 
+import org.nem.nac.BuildConfig;
 import org.nem.nac.common.utils.LogUtils;
 
 import java.io.IOException;
@@ -40,9 +41,9 @@ public final class HttpClient {
 		_httpClient.setConnectTimeout(10, TimeUnit.SECONDS);
 		_httpClient.setReadTimeout(10, TimeUnit.SECONDS);
 		_httpClient.setWriteTimeout(10, TimeUnit.SECONDS);
-//		if (BuildConfig.DEBUG) {
-//			_httpClient.interceptors().add(new LoggingInterceptor());
-//		}
+		if (BuildConfig.DEBUG) {
+			_httpClient.interceptors().add(new LoggingInterceptor());
+		}
 	}
 
 	private class LoggingInterceptor implements Interceptor {

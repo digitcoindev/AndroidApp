@@ -3,6 +3,7 @@ package org.nem.nac.datamodel;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import org.nem.nac.common.exceptions.NacException;
 import org.nem.nac.datamodel.entities.AccountEntity;
@@ -23,14 +24,16 @@ import timber.log.Timber;
 
 public final class NemSQLiteHelper extends SQLiteOpenHelper {
 
-	private static final int DB_VERSION = 3;
-	private static final String DB_NAME = "nem_database.db";
+	private static final String LOG_TAG    = NemSQLiteHelper.class.getSimpleName();
+	private static final int    DB_VERSION = 4;
+	private static final String DB_NAME    = "nem_database.db";
 
 	private static NemSQLiteHelper _instance;
-	private static Context _appContext;
-	private static Cupboard _cupboard;
+	private static Context         _appContext;
+	private static Cupboard        _cupboard;
 
-	public static NemSQLiteHelper getInstance() throws NacException {
+	public static NemSQLiteHelper getInstance()
+			throws NacException {
 		if (null == _instance) {
 			if (null == _appContext) {
 				throw new NacException("Uninitialized context. call setAppContext before first use");
@@ -68,6 +71,11 @@ public final class NemSQLiteHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		Log.i(LOG_TAG, "Upgrading DB from version " + oldVersion + " to version " + newVersion);
+		if (oldVersion < 4 && newVersion == 4) {
+			// Version 4 is mainnet version
+			_cupboard.withDatabase(db).dropAllTables();
+		}
 		// this line will upgrade database, adding columns and new tables.
 		// Note that existing columns will not be converted from what they originally were
 		_cupboard.withDatabase(db).upgradeTables();
@@ -133,8 +141,9 @@ public final class NemSQLiteHelper extends SQLiteOpenHelper {
 	}
 
 	public static class PersistentEntity<T> {
+
 		public long _id;
-		public T entity;
+		public T    entity;
 
 		PersistentEntity(long _id, T entity) {
 			this._id = _id;

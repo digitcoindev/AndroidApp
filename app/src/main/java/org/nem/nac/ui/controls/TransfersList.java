@@ -5,11 +5,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
@@ -33,6 +36,7 @@ import org.nem.nac.models.api.transactions.TransferTransactionApiDto;
 import org.nem.nac.models.primitives.AddressValue;
 import org.nem.nac.tasks.DecryptMessageAsyncTask;
 import org.nem.nac.ui.SwipeDetect;
+import org.nem.nac.ui.utils.Toaster;
 import org.nem.nac.ui.utils.ViewUtils;
 
 import java.util.HashMap;
@@ -46,6 +50,7 @@ public final class TransfersList extends LinearList<TransactionMetaDataPairApiDt
 	private AddressValue           _ownerAddr;
 	private String                 _decryptionFailedError;
 	private final Map<Integer, String> _messagesByTranId = new HashMap<>();
+	private final Handler              _handler          = new Handler();
 
 	public TransfersList(final Context context) {
 		super(context);
@@ -74,6 +79,7 @@ public final class TransfersList extends LinearList<TransactionMetaDataPairApiDt
 		if (item == null) {
 			return itemView;
 		}
+
 		final TransferTransactionApiDto transfer = ((TransferTransactionApiDto)item.transaction.unwrapTransaction());
 		final boolean isOutgoing = transfer.isSigner(_ownerAddr);
 		final boolean isFromToMyself = transfer.signer.toAddress().equals(transfer.recipient);
@@ -82,12 +88,12 @@ public final class TransfersList extends LinearList<TransactionMetaDataPairApiDt
 		final Views views;
 		views = new Views(itemView);
 		//
-		setMessageSwipeListener(itemView, isLeftAligned, views);
+		setMessageSwipeListener(isLeftAligned, views);
 		//
 		final TextView infoView = isLeftAligned ? views.infoLabelLeft : views.infoLabelRight;
 		final TextView hiddenView = !isLeftAligned ? views.infoLabelLeft : views.infoLabelRight;
 		hiddenView.setVisibility(GONE);
-		final String info = getContext().getString(R.string.tran_info_confirmed, item.meta.height.getValue(), item.transaction.fee.toFractionalString());
+		final String info = getContext().getString(R.string.tran_info_confirmed, item.meta.height, item.transaction.fee.toFractionalString());
 		infoView.setText(info);
 		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(500, MeasureSpec.AT_MOST);
 		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(500, MeasureSpec.AT_MOST);
@@ -174,49 +180,69 @@ public final class TransfersList extends LinearList<TransactionMetaDataPairApiDt
 		return itemView;
 	}
 
-	private void setMessageSwipeListener(final View itemView, final boolean isLeftAligned, final Views views) {
-		itemView.setOnTouchListener(new SwipeDetect(true, false)
-				.withOnSwipeDetectedListener((view, direction) -> {
-					final TextView infoView = isLeftAligned ? views.infoLabelLeft : views.infoLabelRight;
-					final SwipeDetect.Direction toOpen = isLeftAligned ? SwipeDetect.Direction.LR : SwipeDetect.Direction.RL;
-					final boolean showInfo = direction == toOpen;
-					final boolean currentlyShown = infoView.getVisibility() == VISIBLE;
-					if (showInfo == currentlyShown) { return; }
-					views.msgPanel.animate()
-							.translationX(showInfo ? 0 : (isLeftAligned ? -infoView.getWidth() : infoView.getWidth()))
-							.setDuration(200)
-							.start();
-					infoView.setAlpha(showInfo ? 0.0f : 1.0f);
-					if (showInfo) {
-						infoView.setVisibility(VISIBLE);
-					}
-					final ViewPropertyAnimator infoAnimator = infoView.animate()
-							.alpha(showInfo ? 1.0f : 0.0f)
-							.setInterpolator(showInfo ? new AccelerateInterpolator() : new DecelerateInterpolator());
-					if (!showInfo) {
-						if (Build.VERSION.SDK_INT < 16) {
-							infoAnimator.setListener(new Animator.AnimatorListener() {
-								@Override
-								public void onAnimationStart(final Animator animation) {}
+	private void setMessageSwipeListener(final boolean isLeftAligned, final Views views) {
+		final SwipeDetect swipeDetect = new SwipeDetect(true, false);
+		swipeDetect.withOnSwipeDetectedListener((view, direction) -> {
+			final TextView infoView = isLeftAligned ? views.infoLabelLeft : views.infoLabelRight;
+			final SwipeDetect.Direction toOpen = isLeftAligned ? SwipeDetect.Direction.LR : SwipeDetect.Direction.RL;
+			final boolean showInfo = direction == toOpen;
+			final boolean currentlyShown = infoView.getVisibility() == VISIBLE;
+			if (showInfo == currentlyShown) { return; }
+			views.msgPanel.animate()
+					.translationX(showInfo ? 0 : (isLeftAligned ? -infoView.getWidth() : infoView.getWidth()))
+					.setDuration(200)
+					.start();
+			infoView.setAlpha(showInfo ? 0.0f : 1.0f);
+			if (showInfo) {
+				infoView.setVisibility(VISIBLE);
+			}
+			final ViewPropertyAnimator infoAnimator = infoView.animate()
+					.alpha(showInfo ? 1.0f : 0.0f)
+					.setInterpolator(showInfo ? new AccelerateInterpolator() : new DecelerateInterpolator());
+			if (!showInfo) {
+				if (Build.VERSION.SDK_INT < 16) {
+					infoAnimator.setListener(new Animator.AnimatorListener() {
+						@Override
+						public void onAnimationStart(final Animator animation) {}
 
-								@Override
-								public void onAnimationEnd(final Animator animation) {
-									infoView.setVisibility(INVISIBLE);
-								}
-
-								@Override
-								public void onAnimationCancel(final Animator animation) {}
-
-								@Override
-								public void onAnimationRepeat(final Animator animation) {}
-							});
+						@Override
+						public void onAnimationEnd(final Animator animation) {
+							infoView.setVisibility(INVISIBLE);
 						}
-						else {
-							infoAnimator.withEndAction(() -> infoView.setVisibility(INVISIBLE));
-						}
-					}
-					infoAnimator.start();
-				}));
+
+						@Override
+						public void onAnimationCancel(final Animator animation) {}
+
+						@Override
+						public void onAnimationRepeat(final Animator animation) {}
+					});
+				}
+				else {
+					infoAnimator.withEndAction(() -> infoView.setVisibility(INVISIBLE));
+				}
+			}
+			infoAnimator.start();
+		});
+		//
+		final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+			@Override
+			public void onLongPress(final MotionEvent e) {
+				int x = Math.round(e.getX());
+				int y = Math.round(e.getY());
+				if (x > views.messageLabel.getLeft() && x < views.messageLabel.getRight() && y > views.messageLabel.getTop() && y < views.messageLabel.getBottom()) {
+					android.content.ClipboardManager clipboard = (android.content.ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+					android.content.ClipData clip = android.content.ClipData.newPlainText("Nem Message", views.messageLabel.getText().toString());
+					clipboard.setPrimaryClip(clip);
+					Toaster.instance().show(R.string.message_copy_complete);
+				}
+			}
+		});
+		//
+		views.msgPanel.setOnTouchListener((v, event) -> {
+			swipeDetect.onTouch(v, event);
+			gestureDetector.onTouchEvent(event);
+			return true;
+		});
 	}
 
 	@Override
@@ -231,6 +257,7 @@ public final class TransfersList extends LinearList<TransactionMetaDataPairApiDt
 
 	private static class Views {
 
+		public View         itemView;
 		public LinearLayout mainPanel;
 		public TextView     dateLabel;
 		public LinearLayout msgPanel;
@@ -240,6 +267,7 @@ public final class TransfersList extends LinearList<TransactionMetaDataPairApiDt
 		public TextView     infoLabelRight;
 
 		public Views(final View convert) {
+			itemView = convert;
 			mainPanel = (LinearLayout)convert.findViewById(R.id.item_main);
 			dateLabel = (TextView)convert.findViewById(R.id.label_date);
 			msgPanel = (LinearLayout)convert.findViewById(R.id.panel_message);

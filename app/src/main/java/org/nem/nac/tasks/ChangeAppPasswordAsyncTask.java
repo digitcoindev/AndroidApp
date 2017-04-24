@@ -99,7 +99,6 @@ public final class ChangeAppPasswordAsyncTask extends BaseAsyncTask<ChangeAppPas
 		final NemSQLiteHelper sqLiteHelper = NemSQLiteHelper.getInstance();
 		final AccountRepository accountRepository = new AccountRepository();
 		final List<Account> accounts = accountRepository.getAllSorted();
-		if (accounts.isEmpty()) { return; }
 		final Optional<BinaryData> eKeyOptional = EKeyProvider.instance().getKey();
 		if (!eKeyOptional.isPresent()) {
 			throw new NacException("Failed to change password!");

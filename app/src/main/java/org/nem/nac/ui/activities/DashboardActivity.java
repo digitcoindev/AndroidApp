@@ -162,44 +162,11 @@ public final class DashboardActivity extends NacBaseActivity {
 			ConfirmDialogFragment.create(true, null, R.string.dialog_message_no_network, R.string.btn_wifi_settings)
 					.setOnConfirmListener(d -> {
 						startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), RequestCodes.ACTION_WIFI_SETTINGS);
+						return true;
 					})
 					.show(getFragmentManager(), FRAG_TAG_NO_NETWORK_DIALOG);
 		}
 	}
-
-//	private void checkUnconfirmedTransactions() {
-//		new GetUnconfirmedTransactionsAsyncTask(_account.publicData.address)
-//				.withCompleteCallback(this::onUnconfirmedTransactions)
-//				.execute();
-//	}
-
-//	private void onUnconfirmedTransactions(final GetUnconfirmedTransactionsAsyncTask task,
-//			final AsyncResult<List<UnconfirmedTransactionMetaDataPairApiDto>> result) {
-//		if (!result.getResult().isPresent()) {
-//			Toaster.instance().showGeneralError();
-//			return;
-//		}
-//		//
-//		try {
-//			final List<UnconfirmedTransactionMetaDataPairApiDto> unconfirmed = result.getResult().get();
-//			if (unconfirmed == null) {
-//				return;
-//			}
-//			if (Stream.of(unconfirmed)
-//					.filter(x -> TransactionsHelper.needToSign(x, _account))
-//					.findFirst().isPresent()) {
-//				if (isMeResumed()) {
-//					ConfirmDialogFragment.create(true, null, R.string.dialog_message_have_unconfirmed, R.string.btn_show_unconfirmed)
-//							.setOnConfirmListener(d -> {
-//								startActivity(new Intent(this, UnconfirmedListActivity.class));
-//							})
-//							.show(getFragmentManager(), null);
-//				}
-//			}
-//		} catch (Throwable t) {
-//			throw t;
-//		}
-//	}
 
 	@Override
 	protected void onPause() {
@@ -335,6 +302,7 @@ public final class DashboardActivity extends NacBaseActivity {
 					ConfirmDialogFragment.create(true, null, R.string.dialog_message_have_unconfirmed, R.string.btn_show_unconfirmed)
 							.setOnConfirmListener(d -> {
 								startActivity(new Intent(this, UnconfirmedListActivity.class));
+								return true;
 							})
 							.show(getFragmentManager(), null);
 				}

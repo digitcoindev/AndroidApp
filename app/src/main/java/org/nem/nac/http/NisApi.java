@@ -4,15 +4,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.annimon.stream.Stream;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Response;
 
 import org.nem.nac.application.AppHost;
 import org.nem.nac.common.Stopwatch;
 import org.nem.nac.common.TimeSpan;
-import org.nem.nac.common.exceptions.NacRuntimeException;
 import org.nem.nac.common.exceptions.NoNetworkException;
 import org.nem.nac.common.utils.AssertUtils;
 import org.nem.nac.common.utils.JsonUtils;
@@ -26,6 +23,7 @@ import org.nem.nac.models.api.transactions.TransactionMetaDataPairArrayApiDto;
 import org.nem.nac.models.api.transactions.UnconfirmedTransactionMetaDataPairArrayApiDto;
 import org.nem.nac.models.network.Server;
 import org.nem.nac.models.primitives.AddressValue;
+import org.nem.nac.servers.ServerFinder;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +48,7 @@ public final class NisApi {
 			return new ServerResponse<>(heartbeatResponse.server, heartbeatResponse.model
 				.isSuccessful(), heartbeatResponse.responseTime);
 		} catch (ServerErrorException | IOException e) {
-			Timber.w(e, "Heartbeat failed with exception");
+			Timber.w("Heartbeat failed with exception: %s/%s", e.getClass().getName(), e.getMessage());
 			return new ServerResponse<>(server, false, TimeSpan.ZERO);
 		}
 	}
@@ -127,7 +125,9 @@ public final class NisApi {
 				throw new ResponseParsingRuntimeException(e, response.isSuccessful());
 			}
 		}
-
+		else if (response.code() >= 500 && response.code() < 600) {
+			ServerFinder.instance().clearBest();
+		}
 		if (parseErrorObject) {
 			try {
 				final ErrorObjectApiDto error = JsonUtils.fromJson(response.body().string(), ErrorObjectApiDto.class);
@@ -172,6 +172,9 @@ public final class NisApi {
 				throw new ResponseParsingRuntimeException(e, response.isSuccessful());
 			}
 		}
+		else if (response.code() >= 500 && response.code() < 600) {
+			ServerFinder.instance().clearBest();
+		}
 
 		if (parseErrorObject) {
 			try {
@@ -193,32 +196,5 @@ public final class NisApi {
 		public static final String ACCOUNT_GET              = "/account/get";
 		public static final String ANNOUNCE_TRANSACTION = "/transaction/announce";
 		public static final String HARVEST_INFO_GET     = "/account/harvests";
-	}
-
-	public enum RequestResultType {
-		VALIDATION(1),
-		HEARTBEAT(2),
-		STATUS(4);
-
-		private static final RequestResultType[] values = RequestResultType.values();
-
-		private final int _value;
-
-		RequestResultType(final int value) {
-			_value = value;
-		}
-
-		@JsonValue
-		public int getValue() {
-			return _value;
-		}
-
-		@JsonCreator
-		public static RequestResultType fromValue(int value) {
-			for (RequestResultType obj : values) {
-				if (obj._value == value) { return obj; }
-			}
-			throw new NacRuntimeException("Unknown RequestResultType found");
-		}
 	}
 }

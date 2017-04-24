@@ -6,6 +6,7 @@
 /build
 
 # custom
+*.iml
 .idea
 *.apk
 *.ap_

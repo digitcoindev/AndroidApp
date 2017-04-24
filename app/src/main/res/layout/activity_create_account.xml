@@ -9,6 +9,7 @@
 	tools:context="org.nem.nac.ui.activities.CreateAccountActivity">
 
 	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appBarLayout"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:theme="@style/AppTheme.AppBarOverlay">
@@ -46,6 +47,8 @@
 				android:id="@+id/input_account_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:focusable="true"
+				android:focusableInTouchMode="true"
 				style="@style/AppTheme.InputGroupInputBorderless"
 				android:hint="@string/input_hint_create_account_name"
 				/>

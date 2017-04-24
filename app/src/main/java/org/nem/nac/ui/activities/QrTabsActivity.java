@@ -87,16 +87,4 @@ public final class QrTabsActivity extends NacBaseActivity {
 		_tabLayout = (TabLayout)findViewById(R.id.tabs);
 		_tabLayout.setupWithViewPager(_viewPager);
 	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		_scanFragment.releaseCamera();
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		_scanFragment.freeResources();
-	}
 }

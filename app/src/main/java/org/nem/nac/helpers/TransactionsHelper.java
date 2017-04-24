@@ -33,6 +33,12 @@ public class TransactionsHelper {
 	}
 
 	private static boolean needToSign(final AddressValue account, final MultisigTransactionApiDto transaction) {
+		if (transaction.otherTrans.type == TransactionType.MOSAIC_DEFINITION_CREATION_TRANSACTION
+				|| transaction.otherTrans.type == TransactionType.MOSAIC_SUPPLY_CHANGE_TRANSACTION
+				|| transaction.otherTrans.type == TransactionType.UNKNOWN) {
+			return false;
+		}
+
 		if (transaction.isSigner(account)) {
 			return false; // me is cosig that created transaction
 		}

@@ -128,12 +128,12 @@
 	<string name="placeholder_recipient_addr">Adresse eingeben</string>
 	<string name="label_amount_with_balance_part_1">Betrag (Kontostand:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Gebühr (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Gebühr (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Gebühr eingeben</string>
 	<string name="toolbar_btn_new">Neu</string>
 	<string name="errormessage_not_allowed">Nicht erlaubt</string>
 	<string name="errormessage_fee_less_than_min">Gebühr war geringer als erlaubt</string>
-	<string name="errormessage_failed_to_import_account">Konto konnte nicht importiert werden</string>
+	<string name="errormessage_failed_to_import_account">Importieren fehlgeschlagen\nFalsches Passwort</string>
 	<string name="btn_share_qr">QR Code teilen</string>
 	<string name="email_body_share_account">Diesen QR Code scannen, um Konto %s zu importieren.</string>
 	<string name="email_subject_share_account">Exportiertes NEM-Konto: %s</string>
@@ -186,7 +186,7 @@
 	<string name="title_activity_select_sender">Absender auswählen</string>
 	<string name="title_activity_harvest_details">Erntedetails</string>
 	<string name="more_item_harvest_details">Erntedetails</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">Für Ernte verwendbarer Anteil: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Delegierte Ernte: %1$s</string>
 	<string name="label_balance">Kontostand: %s XEM</string>
@@ -204,7 +204,7 @@
 	<string name="configuration_header_server_settings">Servereinstellungen</string>
 	<string name="config_item_servers">Server</string>
 	<string name="configuration_header_notifications">Benachrichtigungen</string>
-	<string name="config_item_notifications_interval">Benachrichtigungsinterval</string>
+	<string name="config_item_notifications_interval">Intervall</string>
 	<string name="errormessage_malformed_qr">Fehlerhafter QR</string>
 	<string name="crash_report_toast_text">NEM App ist abgestürzt, wird gemeldet…</string>
 	<string name="dialog_option_add_to_address_book">Zum Adressbuch hinzufügen</string>
@@ -236,14 +236,14 @@
 	<string name="server_result_code_hash_already_in_db">Der Hash existiert bereits in der Datenbank</string>
 	<string name="server_result_code_cannot_validate_signature">Die Signatur konnte nicht validiert werden</string>
 	<string name="server_result_code_unusable_entity">Unbrauchbares Objekt</string>
-	<string name="server_result_code_score_inferior">The score of the remote block chain is inferior (although a superior score was promised)</string>
-	<string name="server_result_code_blockchain_validation_failed">The remote block chain failed validation</string>
+	<string name="server_result_code_score_inferior">Der Wert der Remote-Blockchain ist niedriger (obwohl ein höherer Wert erwartet wurde)</string>
+	<string name="server_result_code_blockchain_validation_failed">Die Validierung der Remote-Blockchain ist fehlgeschlagen</string>
 	<string name="server_result_code_conflicting_importance_transfer">Es gab einen Konflikt mit einer anderen Wichtigkeitsübertragung</string>
 	<string name="server_result_code_too_many_transactions_in_block">Zu viele Transaktionen im gelieferten Block</string>
 	<string name="server_result_code_transaction_signed_by_harvester">Der Block enthält eine Transaktion, die vom Account, der diesen Block geerntet hat, signiert wurde</string>
 	<string name="server_result_code_previous_importance_transaction_conflict">Eine vorherige Wichtigkeitsübertragung steht in Konflikt mit einer neuen Transaktion</string>
 	<string name="server_result_code_previous_importance_transfer_active">Es wurde eine Wichtigkeitsübertragung initiiert während eine Vorherige noch aktiv ist</string>
-	<string name="server_result_code_importance_transfer_not_active">An importance transfer deactivation was attempted but is not active</string>
+	<string name="server_result_code_importance_transfer_not_active">Es wurde versucht, eine Wichtigkeitsübertragung zu deaktivieren, obwohl keine aktiv war.</string>
 	<string name="server_result_code_unknown_status">Unbekannter Status</string>
 	<string name="server_result_code_nis_stopped">NIS ist gestoppt</string>
 	<string name="server_result_code_nis_starting">NIS startet</string>
@@ -306,5 +306,22 @@
 	<string name="errormessage_failed_to_prepare_transaction">Fehler bei der Erstellung der Transaktion!</string>
 	<string name="dialog_message_no_network">Keine Netzwerkverbindung</string>
 	<string name="btn_wifi_settings">WLAN Einstellungen</string>
-
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> von %2$s Mitsignierern</string>
+	<string name="tran_info_min_signers_count">Min %1$s Mitsignierer</string>
+	<string name="title_activity_unconfirmed_list">Unbestätigt</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">Änderungen anzeigen</string>
+	<string name="dialog_message_have_unconfirmed">Es gibt unbestätigte Transaktionen, die Sie mitsignieren können.\nAnzeigen?</string>
+	<string name="btn_show_unconfirmed">Anzeigen</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">Info</string>
+	<string name="unconfirmed_info_account">&lt;b>Konto:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>Gelöscht:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>Hinzugefügt:&lt;/b></string>
+	<string name="label_unconfirmed_date">Unbestätigt</string>
+	<string name="debug_log_file_deleted">Gelöscht</string>
+	<string name="debug_hint_report_comment">Kommentar</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">Dies ist Beta-Software.\nDas NEM-Team übernimmt keine Haftung für eventuelle Verluste beim Testen dieser App.\nDer Benutzer ist für sein Vermögen verantwortlich und muss Backups seiner privaten Schlüssel anlegen.\nDie Benutzung ohne Backups ist fahrlässig. Es wird empfohlen die privaten Schlüssel auf Papier aufzuschreiben und an einem sicheren Ort aufzubewahren. Zusätzlich können die Accounts in Lightwallet/NCC/NanoWallet importiert werden.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">Ich habe diese Warnung gelesen und verstanden und werde Backups meiner privaten Schlüssel angelegen.</string>
+	<string name="dialog_title_mainnet_warning">Warnung</string>
 </resources>

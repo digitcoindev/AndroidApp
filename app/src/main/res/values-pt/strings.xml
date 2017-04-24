@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 	<string name="title_activity_create_account">Criar conta</string>
 	<string name="title_activity_account_list">Contas</string>
 	<string name="errormessage_account_name_empty">Digite seu nome</string>
@@ -129,12 +128,12 @@
 	<string name="placeholder_recipient_addr">Entre com o endereço</string>
 	<string name="label_amount_with_balance_part_1">Quantidade (Balanço:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Taxa (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Taxa (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Entre a taxa</string>
 	<string name="toolbar_btn_new">Novo</string>
 	<string name="errormessage_not_allowed">Não permitido</string>
 	<string name="errormessage_fee_less_than_min">Taxa menor que o mínimo permitido</string>
-	<string name="errormessage_failed_to_import_account">Falha ao importar a conta</string>
+	<string name="errormessage_failed_to_import_account">Importing failed\nIncorrect password</string>
 	<string name="btn_share_qr">compartilhar QR</string>
 	<string name="email_body_share_account">Escanear este QR para importar conta %s.</string>
 	<string name="email_subject_share_account">Conta Nem exportada: %s</string>
@@ -187,7 +186,7 @@
 	<string name="title_activity_select_sender">Selecionar remetente</string>
 	<string name="title_activity_harvest_details">Detalhes da colheita</string>
 	<string name="more_item_harvest_details">Detalhes da colheita</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">Balanco investido: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Colheita delegada: %1$s</string>
 	<string name="label_balance">Balanço: %s XEM</string>
@@ -307,4 +306,22 @@
 	<string name="errormessage_failed_to_prepare_transaction">Falha ao preparar transação!</string>
 	<string name="dialog_message_no_network">Sem conexões de rede</string>
 	<string name="btn_wifi_settings">Opções de WiFi</string>
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> of %2$s Signers</string>
+	<string name="tran_info_min_signers_count">Min %1$s Signers</string>
+	<string name="title_activity_unconfirmed_list">Unconfirmed</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">Show changes</string>
+	<string name="dialog_message_have_unconfirmed">You have unconfirmed transactions that have to be signed.\nView them?</string>
+	<string name="btn_show_unconfirmed">Show</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">Info</string>
+	<string name="unconfirmed_info_account">&lt;b>Account:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>Deleted:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>Added:&lt;/b></string>
+	<string name="label_unconfirmed_date">Unconfirmed</string>
+	<string name="debug_log_file_deleted">Deleted</string>
+	<string name="debug_hint_report_comment">Comment</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">This is a beta test version.\nThe NEM team is not responsible for any loss of funds due to testing this app.\nUsers are responsible for their funds and having their private keys backed up.\nDo not use unless you are confident all your funds are securely backed up. We suggest to write down private keys on paper and store it at a safe place. Additionally, you can import your accounts into Lightwallet/NCC/NanoWallet.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">I have read and understood this warning and will have my private keys backed up.</string>
+	<string name="dialog_title_mainnet_warning">Warning</string>
 </resources>

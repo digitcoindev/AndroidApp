@@ -233,19 +233,19 @@ public final class AddressBookActivity extends NacBaseActivity {
 			startActivity(intent);
 			finish();
 		}
-		else {
-			ContactEditDialog.create(selected)
-					.setOnEditedListener(editedContact -> {
-						try {
-							ContactsHelper.updateContact(this, editedContact);
-							refreshContacts();
-							AddressInfoProvider.instance().invalidateContacts();
-						} catch (RemoteException | OperationApplicationException e) {
-							Toaster.instance().show(R.string.errormessage_failed_to_update_contact);
-						}
-					})
-					.show(getFragmentManager(), null);
-		}
+//		else {
+//			ContactEditDialog.create(selected)
+//					.setOnEditedListener(editedContact -> {
+//						try {
+//							ContactsHelper.updateContact(this, editedContact);
+//							refreshContacts();
+//							AddressInfoProvider.instance().invalidateContacts();
+//						} catch (RemoteException | OperationApplicationException e) {
+//							Toaster.instance().show(R.string.errormessage_failed_to_update_contact);
+//						}
+//					})
+//					.show(getFragmentManager(), null);
+//		}
 	}
 
 	private void onUndoDeleteClick(final View clicked) {

@@ -50,17 +50,17 @@ public final class EncodeQrAsyncTask extends BaseAsyncTask<EncodeQrAsyncTask, Vo
 		}
 	}
 
-	private Bitmap toBitmap(final BitMatrix bitMatrix) {
-		final int height = bitMatrix.getHeight();
-		final int width = bitMatrix.getWidth();
-		final Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
-			}
-		}
-		return bmp;
-	}
+//	private Bitmap toBitmap(final BitMatrix bitMatrix) {
+//		final int height = bitMatrix.getHeight();
+//		final int width = bitMatrix.getWidth();
+//		final Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+//		for (int x = 0; x < width; x++) {
+//			for (int y = 0; y < height; y++) {
+//				bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+//			}
+//		}
+//		return bmp;
+//	}
 
 	private Bitmap toBitmap2(final BitMatrix bitMatrix) {
 		final int height = bitMatrix.getHeight();

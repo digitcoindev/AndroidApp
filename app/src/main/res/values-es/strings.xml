@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="title_activity_create_account">Crear Cuenta</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+	<string name="title_activity_create_account">Crear cuenta</string>
 	<string name="title_activity_account_list">Cuentas</string>
 	<string name="errormessage_account_name_empty">Por favor introduzca su nombre</string>
 	<string name="errortext_password_too_short">Por favor introduzca 6 caracteres como mínimo</string>
 	<string name="text_error">Error</string>
 	<string name="title_activity_import_key">Importar llave privada</string>
-	<string name="title_activity_scan_qr">Escanear Cuenta</string>
+	<string name="title_activity_scan_qr">Escanear cuenta</string>
 	<string name="errormessage_device_doesnt_have_camera">La cámara no se encuentra disponible para este dispositivo</string>
 	<string name="title_activity_dashboard">Panel de control</string>
 	<string name="text_XEM">XEM</string>
@@ -15,7 +14,7 @@
 	<string name="placeholder_input_message">Introduzca el mensaje aquí</string>
 	<string name="errormessage_invalid_address">Dirección invalida</string>
 	<string name="text_CANCEL">Cancelar</string>
-	<string name="title_activity_export_account">Exportar Cuenta</string>
+	<string name="title_activity_export_account">Exportar cuenta</string>
 	<string name="errormessage_not_nem_compatible_qr">Esto no es un QR NEM</string>
 	<string name="input_hint_name">Nombre</string>
 	<string name="input_hint_amount">Cantidad</string>
@@ -116,38 +115,38 @@
 	<string name="message_server_deleted">Borrado %1$s</string>
 	<string name="more_item_accounts">Cambiar cuenta</string>
 	<string name="more_item_map">Mapa</string>
-	<string name="more_item_export_account">Cuenta la exportación</string>
+	<string name="more_item_export_account">Exportar cuenta</string>
 	<string name="title_activity_messages">Mensajes</string>
 	<string name="errormessage_account_not_selected">Cuenta no seleccionada</string>
 	<string name="btn_send">Enviar</string>
-	<string name="text_due_to">Debido por %1$s</string>
+	<string name="text_due_to">Pagadero %1$s</string>
 	<string name="placeholder_empty_transaction">&lt;Transacción vacía></string>
 	<string name="message_decrypting_in_progress">Desencriptando...</string>
 	<string name="errormessage_failed_to_encrypt_msg_no_public_key">No se pudo encriptar el mensaje\nLa cuenta no tiene llave pública</string>
 	<string name="btn_accounts">Cuentas</string>
-	<string name="title_activity_new_transaction">Nueva Transacción</string>
-	<string name="placeholder_recipient_addr">Introducir Dirección</string>
+	<string name="title_activity_new_transaction">Nueva transacción</string>
+	<string name="placeholder_recipient_addr">Introducir dirección</string>
 	<string name="label_amount_with_balance_part_1">Cantidad (Saldo:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Tarifa (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Tarifa (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Introduzca la tarifa</string>
-	<string name="toolbar_btn_new">Nuevo</string>
+	<string name="toolbar_btn_new">Nueva</string>
 	<string name="errormessage_not_allowed">No permitido</string>
 	<string name="errormessage_fee_less_than_min">La tarifa era menor que el mínimo</string>
-	<string name="errormessage_failed_to_import_account">No se pudo importar la cuenta</string>
+	<string name="errormessage_failed_to_import_account">Importing failed\nIncorrect password</string>
 	<string name="btn_share_qr">Compartir QR</string>
 	<string name="email_body_share_account">Escanea este QR para importar la cuenta %s.</string>
 	<string name="email_subject_share_account">Cuenta NEM exportada: %s</string>
 	<string name="action_chooser_share_account">Cuenta NEM</string>
-	<string name="label_checkbox_use_app_password">Utilizar la aplicación de contraseña</string>
+	<string name="label_checkbox_use_app_password">Utilizar la contraseña de la aplicación</string>
 	<string name="errormessage_failed_to_export_account">Fallo al exportar la cuenta!</string>
 	<string name="title_fragment_my_info">Mi información</string>
 	<string name="title_fragment_create_invoice">Factura</string>
 	<string name="title_fragment_scan">Escanear</string>
 	<string name="label_my_address_colon">Mi dirección:</string>
 	<string name="btn_copy_address">Copiar dirección</string>
-	<string name="btn_share_address">Compartir Dirección</string>
-	<string name="label_my_name_colon">Mi nombre:</string>
+	<string name="btn_share_address">Compartir</string>
+	<string name="label_my_name_colon">Nombre:</string>
 	<string name="errormessage_account_error">Error de cuenta</string>
 	<string name="input_hint_enter_amount">Ingrese el monto</string>
 	<string name="btn_create_invoice">Crear</string>
@@ -171,7 +170,7 @@
 	<string name="btn_confirm_add_cosigs">Confirmar</string>
 	<string name="errormessage_no_cosigs_to_add">Nada que añadir</string>
 	<string name="dialog_message_aborting_no_public_key">No se puede continuar:\nLa cuenta no tiene llave pública</string>
-	<string name="btn_confirm_delete_cosigs">Cambio</string>
+	<string name="btn_confirm_delete_cosigs">Confirmar</string>
 	<string name="errormessage_no_cosigs_to_remove">No hay consignatario que eliminar</string>
 	<string name="btn_add_contact">Añadir nuevo contacto</string>
 	<string name="dialog_title_about">Aplicación móvil NEM</string>
@@ -183,11 +182,11 @@
 	<string name="errormessage_failed_to_change_password">No se pudo cambiar la contraseña!</string>
 	<string name="input_hint_current_password">contraseña actual</string>
 	<string name="input_hint_new_password">nueva contraseña</string>
-	<string name="input_hint_confirm_password">Confirmar contraseña</string>
+	<string name="input_hint_confirm_password">confirmar contraseña</string>
 	<string name="title_activity_select_sender">Seleccione remitente</string>
 	<string name="title_activity_harvest_details">Detalles de la cosecha</string>
 	<string name="more_item_harvest_details">Detalles de la cosecha</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
+	<string name="label_poi">POI: %1$,.2f</string>
 	<string name="label_vested_balance">Saldo Dedicado: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Cosecha Delegada: %1$s</string>
 	<string name="label_balance">Saldo: %s XEM</string>
@@ -195,13 +194,13 @@
 	<string name="label_block_fee">Tarifa: %1$s</string>
 	<string name="label_last_harvested_blocks">Últimos %1$d Bloques cosechados</string>
 	<string name="label_last_harvested_block">Último bloque cosechado</string>
-	<string name="toolbar_btn_copy">Copia</string>
+	<string name="toolbar_btn_copy">Copiar</string>
 	<string name="label_last_harvested_blocks_no_blocks">No hay bloques cosechados</string>
 	<string name="title_activity_configuration">Configuración</string>
 	<string name="configuration_header_general">General</string>
 	<string name="config_item_language">Idioma</string>
 	<string name="configuration_header_security">Seguridad</string>
-	<string name="config_item_change_password">Cambia la contraseña</string>
+	<string name="config_item_change_password">Cambiar contraseña</string>
 	<string name="configuration_header_server_settings">Configuración del servidor</string>
 	<string name="config_item_servers">Servidores</string>
 	<string name="configuration_header_notifications">Notificaciones</string>
@@ -219,7 +218,7 @@
 	<string name="invoice_number_separator">/</string>
 	<string name="dialog_title_updates_check_interval">Compruebe si hay actualizaciones cada</string>
 	<string name="label_minutes">%1$s min</string>
-	<string name="label_hours">%1$s horas</string>
+	<string name="label_hours">%1$s h</string>
 	<string name="label_never">Nunca</string>
 	<string name="message_qr_older_version">No se puede escanear: código QR es obsoleto</string>
 	<string name="message_qr_newer_version">No se puede escanear: su aplicación no está actualizada</string>
@@ -307,4 +306,22 @@
 	<string name="errormessage_failed_to_prepare_transaction">No se ha podido preparar transacción!</string>
 	<string name="dialog_message_no_network">No hay conexión a la red</string>
 	<string name="btn_wifi_settings">Configuración Wifi</string>
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> de %2$s firmantes</string>
+	<string name="tran_info_min_signers_count">Min %1$s firmantes</string>
+	<string name="title_activity_unconfirmed_list">No confirmado</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">Mostrar cambios</string>
+	<string name="dialog_message_have_unconfirmed">Tienes unas transacciones no confirmadas que deben ser firmadas.\nVerlas?</string>
+	<string name="btn_show_unconfirmed">Mostrar</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">Info</string>
+	<string name="unconfirmed_info_account">&lt;b>Cuenta:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>Borrado:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>Añadido:&lt;/b></string>
+	<string name="label_unconfirmed_date">No confirmado</string>
+	<string name="debug_log_file_deleted">Deleted</string>
+	<string name="debug_hint_report_comment">Comment</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">This is a beta test version.\nThe NEM team is not responsible for any loss of funds due to testing this app.\nUsers are responsible for their funds and having their private keys backed up.\nDo not use unless you are confident all your funds are securely backed up. We suggest to write down private keys on paper and store it at a safe place. Additionally, you can import your accounts into Lightwallet/NCC/NanoWallet.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">I have read and understood this warning and will have my private keys backed up.</string>
+	<string name="dialog_title_mainnet_warning">Warning</string>
 </resources>

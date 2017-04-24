@@ -31,7 +31,7 @@ public final class QrDto {
 	/**
 	 * Current dto version
 	 */
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 
 	protected static final Map<Type, Class<? extends BaseQrData>> TYPES = new HashMap<>();
 

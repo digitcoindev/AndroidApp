@@ -11,16 +11,8 @@ buildscript {
 }
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'Key'
-            keyPassword '123456'
-            storeFile file('D:/Projects/NEM/TestKeyStore/testkey.jks')
-            storePassword '123456'
-        }
-    }
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
     tasks.whenTaskAdded { task ->
         switch (task.name) {
             case "compileDemoDebugSources":
@@ -36,11 +28,12 @@ android {
     }
     def String versionNameStr = getVersionName()
     defaultConfig {
-        applicationId "org.nem.nac"
+        applicationId "org.nem.nac.mainnet"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
         versionName versionNameStr
+        multiDexEnabled true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,7 +43,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
         debug {
             versionNameSuffix "-debug"
@@ -80,23 +72,21 @@ retrolambda {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.annimon:stream:1.0.5'
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.madgag.spongycastle:prov:1.51.0.0'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
     compile 'com.google.zxing:core:3.2.1'
-    compile 'com.google.zxing:android-core:3.2.1'
     compile 'nl.qbusict:cupboard:2.1.4'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
     compile 'com.madgag.spongycastle:core:1.51.0.0'
     compile 'commons-codec:commons-codec:1.10'
-    compile 'ch.acra:acra:4.7.0'
+    compile 'ch.acra:acra:4.9.0'
     compile 'org.mindrot:jbcrypt:0.3m'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.google.android.gms:play-services-vision:8.4.0'
 }
 
 /**
@@ -105,8 +95,7 @@ dependencies {
 def bumpVersion(def boolean bumpProduction) {
     def PROP_MAJOR = 'version-major',
         PROP_MINOR = 'version-minor',
-        PROP_PRODUCTION = 'production-build',
-        PROP_BUILD = 'build';
+        PROP_PRODUCTION = 'production-build'
     def File versionFile = file('version.properties');
     if (!versionFile.exists()) {
         if (!versionFile.createNewFile()) {
@@ -120,21 +109,18 @@ def bumpVersion(def boolean bumpProduction) {
         def versionMajor = props.getProperty(PROP_MAJOR, "0").toInteger();
         def versionMinor = props.getProperty(PROP_MINOR, "0").toInteger();
         def versionProduction = props.getProperty(PROP_PRODUCTION, "0").toInteger();
-        def versionBuild = props.getProperty(PROP_BUILD, "0").toInteger();
         if (bumpProduction) {
             versionProduction++
         }
-        versionBuild++
         props.setProperty(PROP_MAJOR, versionMajor.toString());
         props.setProperty(PROP_MINOR, versionMinor.toString())
         props.setProperty(PROP_PRODUCTION, versionProduction.toString())
-        props.setProperty(PROP_BUILD, versionBuild.toString())
         props.store(versionFile.newWriter("UTF-8"), "Application version information. Managed by Gradle")
     }
 }
 
 def String getVersionName() {
-    def PROP_MAJOR = 'version-major', PROP_MINOR = 'version-minor', PROP_PRODUCTION = 'production-build', PROP_BUILD = 'build';
+    def PROP_MAJOR = 'version-major', PROP_MINOR = 'version-minor', PROP_PRODUCTION = 'production-build'
     def File versionFile = file('version.properties');
     if (!versionFile.exists()) {
         if (!versionFile.createNewFile()) {
@@ -147,9 +133,8 @@ def String getVersionName() {
         def versionMajor = props.getProperty(PROP_MAJOR, "0");
         def versionMinor = props.getProperty(PROP_MINOR, "0");
         def versionProduction = props.getProperty(PROP_PRODUCTION, "0").toInteger();
-        def versionBuild = props.getProperty(PROP_BUILD, "0");
 
-        return versionMajor + "." + versionMinor + "." + versionProduction + ".b" + versionBuild + " BETA";
+        return versionMajor + "." + versionMinor + "." + versionProduction + " BETA Mainnet";
     } else {
         throw new IOException("Failed to read version file!");
     }

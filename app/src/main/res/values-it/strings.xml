@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 	<string name="title_activity_create_account">Crea account</string>
 	<string name="title_activity_account_list">Account</string>
 	<string name="errormessage_account_name_empty">Il nome non può essere vuoto</string>
@@ -85,13 +84,13 @@
 	<string name="input_hint_port">Porta (default 7890)</string>
 	<string name="btn_add_custom_server">Aggiungi server</string>
 	<string name="errormessage_invalid_protocol">Solo l\'http è supportato</string>
-	<string name="btn_log_in">Log In</string>
+	<string name="btn_log_in">Accedi</string>
 	<string name="title_password_request_dialog">Inserisci password</string>
 	<string name="title_activity_add_account">Creazione account</string>
 	<string name="btn_create_new_account">Crea</string>
 	<string name="btn_scan_qr">Leggi codice QR</string>
 	<string name="btn_import_key">Inserisci chiave</string>
-	<string name="progress_dialog_message_password_checking">Verifiche in corso...</string>
+	<string name="progress_dialog_message_password_checking">Verifica in corso...</string>
 	<string name="errormessage_invalid_password">Password errata</string>
 	<string name="input_hint_create_account_name">Nome dell\'account</string>
 	<string name="input_hint_private_key">Chiave privata</string>
@@ -103,16 +102,16 @@
 	<string name="btn_inputgroup_create_account">Crea</string>
 	<string name="toolbar_btn_done">Fatto</string>
 	<string name="title_dialog_add_server">Aggiunta server</string>
-	<string name="progress_dialog_message_waiting_for_server">Caricamenteo...</string>
+	<string name="progress_dialog_message_waiting_for_server">Caricamento...</string>
 	<string name="errormessage_http_request_failed">Richiesta fallita!</string>
 	<string name="errormessage_no_server">Nessun server valido</string>
 	<string name="dialog_title_account_export_password">Impostazione password per l\'esportazione</string>
 	<string name="dialog_title_account_import_password">Inserisci password</string>
 	<string name="toolbar_btn_dashboard">Pannello</string>
 	<string name="toolbar_btn_addr_book">Rubrica</string>
-	<string name="toolbar_btn_more">Continua</string>
+	<string name="toolbar_btn_more">Altro</string>
 	<string name="title_activity_servers_list">Server</string>
-	<string name="title_activity_more">Continua</string>
+	<string name="title_activity_more">Altre operazioni</string>
 	<string name="message_server_deleted">Eliminato %1$s</string>
 	<string name="more_item_accounts">Cambia account</string>
 	<string name="more_item_map">Mappa</string>
@@ -127,21 +126,21 @@
 	<string name="btn_accounts">Account</string>
 	<string name="title_activity_new_transaction">Nuova transazione</string>
 	<string name="placeholder_recipient_addr">Inserisci indirizzo</string>
-	<string name="label_amount_with_balance_part_1">Importo (Bilancio:</string>
+	<string name="label_amount_with_balance_part_1">Importo (Saldo:</string>
 	<string name="label_amount_with_balance_part_2">XEM):</string>
-	<string name="label_fee_colon">Commissioni (Min %1$s XEM):</string>
+	<string name="label_fee_colon">Commissioni (Min &lt;font color="#%1$s">%2$s&lt;/font> XEM):</string>
 	<string name="placeholder_fee">Inserisci commissioni</string>
 	<string name="toolbar_btn_new">Nuovo</string>
 	<string name="errormessage_not_allowed">Non consentito</string>
 	<string name="errormessage_fee_less_than_min">Commissioni inferiori al minimo previsto</string>
-	<string name="errormessage_failed_to_import_account">Errore nell\'importazione dell\'account!</string>
+	<string name="errormessage_failed_to_import_account">Importazione fallita\nPassword errata</string>
 	<string name="btn_share_qr">Condividi codice QR</string>
 	<string name="email_body_share_account">Scansiona questo QR per importare l\'account %s.</string>
 	<string name="email_subject_share_account">NEM Exported Account: %s</string>
 	<string name="action_chooser_share_account">Account NEM</string>
 	<string name="label_checkbox_use_app_password">Usa la password dell\'app</string>
 	<string name="errormessage_failed_to_export_account">Errore nell\'esportazione dell\'account!</string>
-	<string name="title_fragment_my_info">Informazioni</string>
+	<string name="title_fragment_my_info">Info</string>
 	<string name="title_fragment_create_invoice">Ricevuta</string>
 	<string name="title_fragment_scan">Scansiona</string>
 	<string name="label_my_address_colon">Il mio indirizzo:</string>
@@ -187,10 +186,10 @@
 	<string name="title_activity_select_sender">Seleziona mittente</string>
 	<string name="title_activity_harvest_details">Infomazioni sulla generazione di blocchi</string>
 	<string name="more_item_harvest_details">Infomazioni sulla generazione di blocchi</string>
-	<string name="label_poi">POI: %1$,.2f‱</string>
-	<string name="label_vested_balance">Bilancio consolidato: %1$s XEM</string>
+	<string name="label_poi">POI: %1$,.2f</string>
+	<string name="label_vested_balance">Saldo consolidato: %1$s XEM</string>
 	<string name="label_delegated_harvesting">Generazione blocchi sicura: %1$s</string>
-	<string name="label_balance">Bilancio: %s XEM</string>
+	<string name="label_balance">Saldo: %s XEM</string>
 	<string name="label_block_id">Blocco #%1$d</string>
 	<string name="label_block_fee">Commissioni: %1$s</string>
 	<string name="label_last_harvested_blocks">Ultimi %1$d blocchi generati</string>
@@ -269,9 +268,9 @@
 	<string name="config_item_primary_account">Account principale</string>
 	<string name="dialog_title_select_primary_account">Account principale</string>
 	<string name="primary_account_none">Nessuno</string>
-	<string name="delegated_harvesting_unlocked">Sbloccato</string>
-	<string name="delegated_harvesting_locked">Bloccato</string>
-	<string name="label_small_balance_inside_amount">&lt;small>(Patrimonio &lt;font color="#41ce7b">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
+	<string name="delegated_harvesting_unlocked">Sbloccata</string>
+	<string name="delegated_harvesting_locked">Bloccata</string>
+	<string name="label_small_balance_inside_amount">&lt;small>(Saldo &lt;font color="#41ce7b">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
 	<string name="label_amount_with_balance_placeholder">Importo:%1$s</string>
 	<string name="errormessage_failed_to_save_contact">Impossibile salvare il contatto</string>
 	<string name="errormessage_too_short_password_hint">Almeno %1$d caratteri</string>
@@ -307,4 +306,22 @@
 	<string name="errormessage_failed_to_prepare_transaction">Fallita la preparazione della transazione</string>
 	<string name="dialog_message_no_network">Connessione di rete assente</string>
 	<string name="btn_wifi_settings">Impostazioni WiFi</string>
+	<string name="tran_info_signers_count">&lt;font color="#41ce7b">%1$d&lt;/font> di %2$s firmatari</string>
+	<string name="tran_info_min_signers_count">Min %1$s firmatari</string>
+	<string name="title_activity_unconfirmed_list">Non confermate</string>
+	<string name="label_xem_colon">XEM:</string>
+	<string name="button_show_changes_text">Mostra cambiamenti</string>
+	<string name="dialog_message_have_unconfirmed">Ci sono transazioni in attesa di essere firmate.\nVisualizzarle?</string>
+	<string name="btn_show_unconfirmed">Mostra</string>
+	<string name="dialog_title_unconfirmed_aggregate_modification_info">Info</string>
+	<string name="unconfirmed_info_account">&lt;b>Account:&lt;/b> %1$s</string>
+	<string name="unconfirmed_info_deleted_colon">&lt;b>Eliminato:&lt;/b></string>
+	<string name="unconfirmed_info_added_colon">&lt;b>Aggiunto:&lt;/b></string>
+	<string name="label_unconfirmed_date">Non confermata</string>
+	<string name="debug_log_file_deleted">Cancellato</string>
+	<string name="debug_hint_report_comment">Commento</string>
+	<string name="poi_symbol">‱</string>
+	<string name="dialog_message_mainnet_warning">Questo software è in versione beta.\nIl team NEM declina ogni responsabilità per eventuali perdite di fondi causate dall\'utilizzo di questa app.\nGli utenti sono responsabili dei propri fondi e dei propri backup.\nNon utilizzare questa app se non sei sicuro di aver effettuato un backup delle chiavi private; suggeriamo di scriverle su di un foglio di carta da conservare in un luogo sicuro. Inoltre, puoi importare i tuoi account in Lightwallet/NCC/NanoWallet.</string>
+	<string name="label_checkbox_confirm_mainnet_warning">Ho capito e farò un backup delle mie chiavi private.</string>
+	<string name="dialog_title_mainnet_warning">Attenzione</string>
 </resources>
