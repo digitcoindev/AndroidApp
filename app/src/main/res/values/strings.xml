@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-	<string name="app_name" translatable="false">NEM Mainnet</string>
+	<!-- <string name="app_name" translatable="false">NEM Wallet+</string>
+	<string name="app_name" translatable="false">NEM移动终端</string>  -->
 	<string name="toolbar_btn_qr" translatable="false">QR</string>
 	<string name="title_activity_qr_tabs" translatable="false">QR</string>
 	<string name="label_balance_xems" translatable="false">%1$s XEM</string>
@@ -291,7 +292,7 @@
 	<string name="primary_account_none">None</string>
 	<string name="delegated_harvesting_unlocked">Unlocked</string>
 	<string name="delegated_harvesting_locked">Locked</string>
-	<string name="label_small_balance_inside_amount">&lt;small>(Balance &lt;font color="#41ce7b">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
+	<string name="label_small_balance_inside_amount">&lt;small>(Balance &lt;font color="#1f9ab6">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
 	<string name="label_amount_with_balance_placeholder">Amount:%1$s</string>
 	<string name="errormessage_failed_to_save_contact">Failed to save contact</string>
 	<string name="errormessage_too_short_password_hint">Min %1$d characters</string>
@@ -348,4 +349,13 @@
 	<string name="btn_delete_app_data">delete application data</string>
 	<string name="errormessage_database_problem">Unrecoverable database problem, please</string>
 	<string name="notification_text_unsigned_transactions">%1$s has %2$d unsigned transaction(s)</string>
+	<!-- for finger print -->
+	<string name="sign_in">Sign in</string>
+	<string name="fingerprint_description">Confirm fingerprint to continue</string>
+	<string name="fingerprint_hint">Touch sensor</string>
+	<string name="fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+	<string name="fingerprint_success">Fingerprint recognized</string>
+	<string name="new_fingerprint_enrolled_description">A new fingerprint was added to this device, so your password is required.</string>
+	<string name="use_fingerprint_to_authenticate_title">Use fingerprint to authenticate</string>
+	<string name="login_reg_fingerprint">At Device Setting, register at least one fingerprint</string>
 </resources>

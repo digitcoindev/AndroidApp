@@ -31,15 +31,29 @@ public final class QrResultDecoder {
 		_successListener = successListener;
 	}
 
+	private String checkInvoice(String json){
+		//QrDto dto;
+		if (!json.contains("name")){
+			String jsonBegin = json.substring(0,json.indexOf("}}"));
+			String jsonEnd = json.substring(json.indexOf("}}"));
+			json= jsonBegin + ",\"name\":\" \"" + jsonEnd;
+			Timber.d("%s", json);
+		}
+
+		return json;
+	}
+
 	public void decodeResult(final QrResult qrResult) {
 		if (qrResult.status != ScanResultStatus.OK) {
 			Timber.d("Qr not found");
 			onQrNotFound();
 			return;
 		}
-
-		final String json = qrResult.text;
-		final QrDto dto;
+		String json = qrResult.text;
+		if (json.contains("\"type\":2")){
+			json=checkInvoice(json);
+		}
+		QrDto dto;
 		try {
 			dto = JsonUtils.fromJson(json, QrDto.class);
 			if (!dto.data.validate()) {

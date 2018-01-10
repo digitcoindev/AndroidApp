@@ -46,7 +46,9 @@ public final class MultisigSignatureTransactionDraft extends AbstractTransaction
 	@NonNull
 	@Override
 	public Xems calculateMinimumFee() {
-		return Xems.fromXems(6);
+		//return Xems.fromXems(6);
+		//return Xems.fromXems(3*AppConstants.MinimumFee_factor);
+		return Xems.fromXems(AppConstants.MinimumFee_basic*AppConstants.MinimumFee_factor);
 	}
 
 	@Override

@@ -3,9 +3,12 @@ package org.nem.nac.tasks;
 import com.annimon.stream.Optional;
 
 import org.nem.nac.R;
+import org.nem.nac.application.AppConstants;
+import org.nem.nac.application.AppSettings;
 import org.nem.nac.common.exceptions.NacException;
 import org.nem.nac.common.utils.AssertUtils;
 import org.nem.nac.crypto.KeyProvider;
+import org.nem.nac.crypto.Mcrypto;
 import org.nem.nac.crypto.PasswordHasher;
 import org.nem.nac.datamodel.NemSQLiteHelper;
 import org.nem.nac.datamodel.repositories.AccountRepository;
@@ -51,6 +54,7 @@ public final class ChangeAppPasswordAsyncTask extends BaseAsyncTask<ChangeAppPas
 			// 4. if all ok - store keys and new password back
 			try {
 				changePassword(_newPwd);
+				backupPW(_newPwd);
 				return true;
 			} catch (NacException e) {
 				Timber.e(e, "Failed to change password!");
@@ -81,6 +85,7 @@ public final class ChangeAppPasswordAsyncTask extends BaseAsyncTask<ChangeAppPas
 					EKeyProvider.instance().setKey(null);
 				}
 				sqLiteHelper.commitTransaction();
+				backupPW(_newPwd);
 				return true;
 			} catch(Throwable throwable) {
 				Timber.e(throwable, "Failed to change password");
@@ -128,5 +133,16 @@ public final class ChangeAppPasswordAsyncTask extends BaseAsyncTask<ChangeAppPas
 			sqLiteHelper.endTransaction();
 			System.gc();
 		}
+	}
+
+	private void backupPW(String newPwd){
+		// encrypt n set pw store
+		String encPW= null;
+		try {
+			encPW = new Mcrypto().encryptPassword(newPwd, AppConstants.secKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		AppSettings.instance().setPassword(encPW);
 	}
 }

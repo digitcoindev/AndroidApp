@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/confm_new_title"
+        android:textColor="@color/official_green_dark"
+        android:textSize="@dimen/text_size_large"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/official_green"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/confm_new_amount_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confm_new_amount_label"
+            android:text="@string/input_hint_amount"
+            android:textColor="@color/official_gray"
+            android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confm_new_amount"
+            android:textColor="@color/official_green_dark"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/confm_new_msg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confm_new_msg_label"
+            android:text="@string/input_hint_message"
+            android:textColor="@color/official_gray"
+            android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confm_new_msg"
+            android:textColor="@color/official_green_dark"
+            android:textSize="@dimen/text_size_smaller"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/confm_new_address_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confm_new_address_label"
+            android:text="@string/input_hint_address"
+            android:textColor="@color/official_gray"
+            android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confm_new_address"
+            android:textColor="@color/official_green_dark"
+            android:textSize="@dimen/text_size_smaller"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -270,7 +270,7 @@
 	<string name="primary_account_none">없음</string>
 	<string name="delegated_harvesting_unlocked">열림</string>
 	<string name="delegated_harvesting_locked">잠김</string>
-	<string name="label_small_balance_inside_amount">&lt;small>(잔액 &lt;font color="#41ce7b">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
+	<string name="label_small_balance_inside_amount">&lt;small>(잔액 &lt;font color="#1f9ab6">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
 	<string name="label_amount_with_balance_placeholder">금액:%1$s</string>
 	<string name="errormessage_failed_to_save_contact">연락처 저장 실패</string>
 	<string name="errormessage_too_short_password_hint">최소 %1$d 글자</string>
@@ -324,4 +324,13 @@
 	<string name="dialog_message_mainnet_warning">베타 테스트 버전입니다.\nNEM팀은 본 어플리케이션의 테스팅으로 인한 펀드 손실에 대해 어떠한 책임도 지지않습니다..\n사용자는 프라이빗 키와 펀드를 백업을 해두어야 할 책임이 있습니다.\n펀드를 백업시키지 않았다면 본 어플리케이션 사용을 권장하지 않습니다. 프라이빗 키를 종이에 쓴 후 안전한 곳에 보관하십시오. 또는, 라이트월렛/NCC/나노월렛에 저장하여 안전하게 보관하십시오.</string>
 	<string name="label_checkbox_confirm_mainnet_warning">주의사항을 읽고 이해했으며 프라이빗 키를 백업하겠습니다.</string>
 	<string name="dialog_title_mainnet_warning">주의</string>
+	<!-- for finger print -->
+	<string name="sign_in">로그인</string>
+	<string name="fingerprint_description">계속하기 위해서는 지문을 인식해주세요.</string>
+	<string name="fingerprint_hint">센서에 손가락을 올려주세요.</string>
+	<string name="fingerprint_not_recognized">지문이 확인되지 않습니다. 다시 시도하세요.</string>
+	<string name="fingerprint_success">지문이 확인되었습니다.</string>
+	<string name="new_fingerprint_enrolled_description">기기에 새로운 지문이 추가되었습니다. 패스워드를 입력해주세요.</string>
+	<string name="use_fingerprint_to_authenticate_title">지문으로 인증하기</string>
+	<string name="login_reg_fingerprint">기기 설정에서 최소 한 개의 지문을 등록해주세요.</string>
 </resources>

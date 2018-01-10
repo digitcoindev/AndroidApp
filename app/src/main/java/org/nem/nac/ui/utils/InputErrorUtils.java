@@ -2,14 +2,17 @@ package org.nem.nac.ui.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.nem.nac.R;
+import org.nem.nac.application.NacApplication;
 
 public final class InputErrorUtils {
 
@@ -34,11 +37,11 @@ public final class InputErrorUtils {
 	public static void clearErrorState(final TextView input) {
 		final Object textColorTag = input.getTag(R.id.tagkey_text_color);
 		final Object hintColorTag = input.getTag(R.id.tagkey_hint_color);
-		final Resources resources = input.getContext().getResources();
-		final int textColor = (textColorTag != null && textColorTag instanceof Integer) ? (int)textColorTag : resources
-				.getColor(R.color.default_black);
-		final int hintColor = (hintColorTag != null && hintColorTag instanceof Integer) ? (int)hintColorTag : resources
-				.getColor(R.color.hint_foreground_material_light);
+		//final Resources resources = input.getContext().getResources();  // NacApplication.getAppContext()
+		final int textColor = (textColorTag != null && textColorTag instanceof Integer) ? (int)textColorTag :
+				ContextCompat.getColor(input.getContext(), R.color.default_black);
+		final int hintColor = (hintColorTag != null && hintColorTag instanceof Integer) ? (int)hintColorTag :
+				ContextCompat.getColor(input.getContext(),R.color.hint_foreground_material_light);
 
 		input.setTextColor(textColor);
 		input.setHintTextColor(hintColor);

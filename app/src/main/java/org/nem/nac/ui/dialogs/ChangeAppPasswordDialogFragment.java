@@ -14,7 +14,9 @@ import android.widget.EditText;
 import com.annimon.stream.Optional;
 
 import org.nem.nac.R;
+import org.nem.nac.application.AppSettings;
 import org.nem.nac.common.async.AsyncResult;
+import org.nem.nac.crypto.Mcrypto;
 import org.nem.nac.datamodel.repositories.AppPasswordRepository;
 import org.nem.nac.models.AppPassword;
 import org.nem.nac.tasks.ChangeAppPasswordAsyncTask;

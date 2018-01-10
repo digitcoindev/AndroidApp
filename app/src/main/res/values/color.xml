@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="official_green">#41ce7b</color>
-	<color name="official_orange">#dfa82f</color>
-	<color name="official_gray">#8e8e8e</color>
-	<color name="light_gray">#cccccc</color>
-	<color name="login_activity_background">#515851</color>
-	<color name="default_gray_background">#ebebeb</color>
-	<color name="default_red">#FD7A7A</color>
-	<color name="white">#FFF</color>
-	<color name="transparent">#0000</color>
+   <color name="official_orange">#dfa82f</color>
+   <color name="official_gray">#8e8e8e</color>
+   <color name="light_gray">#cccccc</color>
+   <color name="login_activity_background">#cccccc</color>
+   <color name="default_gray_background">#ebebeb</color>
+   <color name="default_red">#FD7A7A</color>
+   <color name="white">#FFF</color>
+   <color name="transparent">#0000</color>
 
-	<color name="white_inactive">#B1B1B1</color>
-	<color name="default_black">#444444</color>
-	<color name="main_green">#41CE7B</color>
-	<color name="main_orange">#DFA82F</color>
-	<color name="dark_red">#7D1010</color>
-	<color name="main_text">#444</color>
-	<color name="toolbar_background_default">#41CE7B</color>
-	<color name="listview_item_text_color">#444</color>
-	<color name="button_bottom_background">#444</color>
+   <color name="white_inactive">#B1B1B1</color>
+   <color name="default_black">#444444</color>
+
+   <color name="main_orange">#DFA82F</color>
+   <color name="dark_red">#7D1010</color>
+   <color name="main_text">#444</color>
+
+   <color name="listview_item_text_color">#444</color>
+   <color name="button_bottom_background">#444</color>
+   <color name="hint_foreground_material_light">#B1B1B1</color>
+   <!--  finger print -->
+   <color name="warning_color">#f4511e</color>
+   <color name="hint_color">#42000000</color>
+   <color name="success_color">#009688</color>
+
 </resources>

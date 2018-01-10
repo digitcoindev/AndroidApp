@@ -229,7 +229,8 @@ public final class AddressBookActivity extends NacBaseActivity {
 		final Contact selected = _adapter.getItem(position);
 		if (selected.hasValidAddress()) {
 			final Intent intent = new Intent(this, NewTransactionActivity.class)
-					.putExtra(NewTransactionActivity.EXTRA_STR_ADDRESS, selected.getValidAddress().get().getRaw());
+					.putExtra(NewTransactionActivity.EXTRA_STR_ADDRESS, selected.getValidAddress().get().getRaw())
+					.putExtra(NewTransactionActivity.EXTRA_STR_NAME, selected.getName());
 			startActivity(intent);
 			finish();
 		}

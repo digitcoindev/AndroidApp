@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -197,7 +198,7 @@ public final class UnconfirmedTransfersList extends LinearList<UnconfirmedTransa
 							.getString(R.string.tran_info_signers_count, msigTransaction.signatures.length + 1, (_cosignatories != null ? NumberUtils
 									.toString(_cosignatories) : "-"));
 					info += '\n';
-					info += Html.fromHtml(htmlStr);
+					info += fromHtml(htmlStr);
 				}
 
 				info += ('\n' + getContext()
@@ -205,6 +206,18 @@ public final class UnconfirmedTransfersList extends LinearList<UnconfirmedTransa
 			}
 		}
 		return info;
+	}
+
+	@SuppressWarnings("deprecation")
+	public static Spanned fromHtml(String html){
+		Spanned result;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+			result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+		} else {
+			result = Html.fromHtml(html);
+		}
+
+		return result;
 	}
 
 	private void init() {

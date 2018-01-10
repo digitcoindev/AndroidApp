@@ -270,7 +270,7 @@
 	<string name="primary_account_none">Ninguna</string>
 	<string name="delegated_harvesting_unlocked">desbloqueado</string>
 	<string name="delegated_harvesting_locked">bloqueado</string>
-	<string name="label_small_balance_inside_amount">&lt;small>(Saldo &lt;font color="#41ce7b">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
+	<string name="label_small_balance_inside_amount">&lt;small>(Saldo &lt;font color="#1f9ab6">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
 	<string name="label_amount_with_balance_placeholder">Monto:%1$s</string>
 	<string name="errormessage_failed_to_save_contact">Error al guardar el contacto</string>
 	<string name="errormessage_too_short_password_hint">Mínimo %1$d caracteres</string>
@@ -324,4 +324,13 @@
 	<string name="dialog_message_mainnet_warning">This is a beta test version.\nThe NEM team is not responsible for any loss of funds due to testing this app.\nUsers are responsible for their funds and having their private keys backed up.\nDo not use unless you are confident all your funds are securely backed up. We suggest to write down private keys on paper and store it at a safe place. Additionally, you can import your accounts into Lightwallet/NCC/NanoWallet.</string>
 	<string name="label_checkbox_confirm_mainnet_warning">I have read and understood this warning and will have my private keys backed up.</string>
 	<string name="dialog_title_mainnet_warning">Warning</string>
+	<!-- for finger print -->
+	<string name="sign_in">Iniciar sesión</string>
+	<string name="fingerprint_description">Confirmar la huella digital para continuar</string>
+	<string name="fingerprint_hint">Sensor táctil</string>
+	<string name="fingerprint_not_recognized">No se reconoce la huella digital. Inténtalo de nuevo</string>
+	<string name="fingerprint_success">Huella digital reconocida</string>
+	<string name="new_fingerprint_enrolled_description">Se agregó una nueva huella digital a este dispositivo, por lo que se requiere su contraseña.</string>
+	<string name="use_fingerprint_to_authenticate_title">Usar huella digital para autenticar</string>
+	<string name="login_reg_fingerprint">En Configuración del dispositivo, registre al menos una huella digital</string>
 </resources>

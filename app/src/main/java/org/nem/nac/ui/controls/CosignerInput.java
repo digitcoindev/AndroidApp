@@ -54,7 +54,8 @@ public final class CosignerInput extends AutoCompleteTextView {
 	public boolean validate() {
 		final NacPublicKey key = (NacPublicKey)getTag(R.id.tagkey_selected_public_key);
 		if (key != null) { return true; }
-		final String text = getText().toString();
+		String text = getText().toString();
+
 		if (isEmpty()) {
 			InputErrorUtils.setErrorState(this, R.string.errormessage_invalid_public_key_entered);
 			return false;

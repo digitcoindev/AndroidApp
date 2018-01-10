@@ -259,7 +259,7 @@ public final class DashboardActivity extends NacBaseActivity {
 					.filter(x -> x.transaction.unwrapTransaction().type == TransactionType.TRANSFER_TRANSACTION)
 					.map(x -> new MaybeConfirmedtransfer(x.isConfirmed, (TransferTransactionApiDto)x.transaction.unwrapTransaction()))
 					.collect(Collectors.toList());
-			//
+			_dataToDisplay.clear();  //kwl  must clear, else not list update
 			for (MaybeConfirmedtransfer tran : transfers) {
 				final AddressValue companion = tran.transfer.getCompanion(_account.publicData.address);
 				if (!_dataToDisplay.containsKey(companion)) {

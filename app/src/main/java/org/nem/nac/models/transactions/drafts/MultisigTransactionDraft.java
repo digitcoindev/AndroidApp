@@ -2,6 +2,7 @@ package org.nem.nac.models.transactions.drafts;
 
 import android.support.annotation.NonNull;
 
+import org.nem.nac.application.AppConstants;
 import org.nem.nac.common.enums.TransactionType;
 import org.nem.nac.common.exceptions.NacException;
 import org.nem.nac.common.exceptions.NacRuntimeException;
@@ -35,7 +36,9 @@ public final class MultisigTransactionDraft extends AbstractTransactionDraft {
 	@NonNull
 	@Override
 	public Xems calculateMinimumFee() {
-		return Xems.fromXems(6);
+		//return Xems.fromXems(6);
+		//return Xems.fromXems(3* AppConstants.MinimumFee_factor);
+		return Xems.fromXems(AppConstants.MinimumFee_basic* AppConstants.MinimumFee_factor);
 	}
 
 	@NonNull

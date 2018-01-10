@@ -10,6 +10,7 @@ import com.annimon.stream.Optional;
 import org.nem.nac.BuildConfig;
 import org.nem.nac.R;
 import org.nem.nac.common.TimeSpan;
+import org.nem.nac.common.enums.NetworkVersion;
 import org.nem.nac.common.utils.ErrorUtils;
 import org.nem.nac.common.utils.StringUtils;
 import org.nem.nac.models.network.Server;
@@ -46,26 +47,38 @@ public final class AppSettings {
 	private static final String PREF_BOOL_NOTIFICATION_SOUND              = "PREF_BOOL_NOTIFICATION_SOUND";
 	private static final String PREF_BOOL_NOTIFICATION_VIBRATION          = "PREF_BOOL_NOTIFICATION_VIBRATION";
 	private static final String PREF_BOOL_NOTIFICATION_SHOW_ON_LOCKSCREEN = "PREF_BOOL_NOTIFICATION_SHOW_ON_LOCKSCREEN";
+	private static final String PREF_BOOL_PASSWORD              = "PASSWORD";
 
 	private static AppSettings _instance;
 
 	private static       List<MoreItem>       _moreItems           = new ArrayList<>();
 	private static       Map<String, Integer> _supportedLocalesRes = new LinkedHashMap<>();
 	private static final List<TimeSpan>       _updateIntervals     = new ArrayList<>();
-	private static final Server[]             _predefinedServers   = new Server[] {
-			new Server("http", "jusan.nem.ninja", AppConstants.DEFAULT_PORT),
-			new Server("http", "nijuichi.nem.ninja", AppConstants.DEFAULT_PORT),
-			new Server("http", "85.25.36.97", AppConstants.DEFAULT_PORT),
-			new Server("http", "62.75.171.41", AppConstants.DEFAULT_PORT),
-			new Server("http", "85.25.36.92", AppConstants.DEFAULT_PORT),
-			new Server("http", "199.217.112.135", AppConstants.DEFAULT_PORT),
-			new Server("http", "san.nem.ninja", AppConstants.DEFAULT_PORT),
-			new Server("http", "go.nem.ninja", AppConstants.DEFAULT_PORT),
-			new Server("http", "hachi.nem.ninja", AppConstants.DEFAULT_PORT),
-			new Server("http", "108.61.182.27", AppConstants.DEFAULT_PORT),
-			new Server("http", "104.238.161.61", AppConstants.DEFAULT_PORT),
-			new Server("http", "108.61.168.86", AppConstants.DEFAULT_PORT)
-	};
+	private static final Server[]             _predefinedServers = PredefinedServers();
+
+	private static Server[] PredefinedServers(){
+		if (BuildConfig.FLAVOR.equals("_testnet") || BuildConfig.FLAVOR.equals("_testnet_cn") ){
+			return new Server[] {  //kwl
+					new Server("http", "192.3.61.243", AppConstants.DEFAULT_PORT),
+					new Server("http", "50.3.87.123", AppConstants.DEFAULT_PORT)
+			};
+		} else {
+			return new Server[] {
+					new Server("http", "jusan.nem.ninja", AppConstants.DEFAULT_PORT),
+					new Server("http", "nijuichi.nem.ninja", AppConstants.DEFAULT_PORT),
+					new Server("http", "85.25.36.97", AppConstants.DEFAULT_PORT),
+					new Server("http", "62.75.171.41", AppConstants.DEFAULT_PORT),
+					new Server("http", "85.25.36.92", AppConstants.DEFAULT_PORT),
+					new Server("http", "199.217.112.135", AppConstants.DEFAULT_PORT),
+					new Server("http", "san.nem.ninja", AppConstants.DEFAULT_PORT),
+					new Server("http", "go.nem.ninja", AppConstants.DEFAULT_PORT),
+					new Server("http", "hachi.nem.ninja", AppConstants.DEFAULT_PORT),
+					new Server("http", "108.61.182.27", AppConstants.DEFAULT_PORT),
+					new Server("http", "104.238.161.61", AppConstants.DEFAULT_PORT),
+					new Server("http", "108.61.168.86", AppConstants.DEFAULT_PORT)
+			};
+		}
+	}
 
 	static {
 		_moreItems.add(new MoreItem(R.string.more_item_accounts, AccountListActivity::start));
@@ -182,6 +195,18 @@ public final class AppSettings {
 		_sharedPreferences.edit().remove(PREF_PRIMARY_ADDRESS).apply();
 	}
 	//endregion
+
+	//  Finger print pw store
+	public synchronized void setPassword(String pw) {
+		_sharedPreferences.edit()
+				.putString(PREF_BOOL_PASSWORD, pw)
+				.apply();
+	}
+
+	public synchronized String getPassword() {
+		final String pw = _sharedPreferences.getString(PREF_BOOL_PASSWORD, null);
+		return pw;
+	}
 
 	//region firstStart
 

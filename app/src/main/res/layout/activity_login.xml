@@ -41,7 +41,7 @@
 			android:layout_marginTop="80dp"
 			android:minWidth="@dimen/dialog_min_width"
 			android:orientation="vertical"
-			android:layout_gravity="center"
+			android:layout_gravity="center_horizontal"
 			android:background="@color/transparent">
 			<!-- Title -->
 			<TextView
@@ -66,6 +66,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:inputType="textPassword"
+					android:gravity="center"
 					style="@style/AppTheme.InputGroupInputBorderless"
 					/>
 			</LinearLayout>
@@ -79,6 +80,18 @@
 				android:text="@string/btn_log_in"
 				style="@style/AppTheme.InputGroupConfirmButton"
 				/>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:gravity="center">
+			<Button
+				android:id="@+id/btn_fingerprint"
+				android:layout_width="70dp"
+				android:layout_height="70dp"
+				android:background="@drawable/ic_fp_40px"
+				android:layout_marginTop="40dp"/>
+			</LinearLayout>
 		</LinearLayout>
 	</LinearLayout>
 

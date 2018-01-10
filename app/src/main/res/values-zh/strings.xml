@@ -270,7 +270,7 @@
 	<string name="primary_account_none">无</string>
 	<string name="delegated_harvesting_unlocked">解锁</string>
 	<string name="delegated_harvesting_locked">锁定</string>
-	<string name="label_small_balance_inside_amount">&lt;small>(余额 &lt;font color="#41ce7b">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
+	<string name="label_small_balance_inside_amount">&lt;small>(余额 &lt;font color="#1f9ab6">&lt;b>%1$s&lt;/b>&lt;/font> XEM)&lt;/small></string>
 	<string name="label_amount_with_balance_placeholder">总额：%1$s</string>
 	<string name="errormessage_failed_to_save_contact">保存联系人失败</string>
 	<string name="errormessage_too_short_password_hint">最少 %1$d 个字符</string>
@@ -324,4 +324,13 @@
 	<string name="dialog_message_mainnet_warning">当前版本是Beta测试版。\nNEM团队对任何资金的丢失不负有责任。\n用户需知晓风险并备份一切有资金的账户。\n在确认备份妥当之前不要使用。我们推荐抄下私钥并放置在安全保管设施中。您也可以将账户导入至NCC中异机保管。</string>
 	<string name="label_checkbox_confirm_mainnet_warning">我已阅读和知晓以上警告并已将做好私钥备份</string>
 	<string name="dialog_title_mainnet_warning">警告</string>
+	<!-- for finger print -->
+	<string name="sign_in">登录</string>
+	<string name="fingerprint_description">确认指纹后继续</string>
+	<string name="fingerprint_hint">触摸感应</string>
+	<string name="fingerprint_not_recognized">指纹未识别，请重试</string>
+	<string name="fingerprint_success">指纹已识别</string>
+	<string name="new_fingerprint_enrolled_description">设备有新增指纹，请确认密码</string>
+	<string name="use_fingerprint_to_authenticate_title">使用指纹认证</string>
+	<string name="login_reg_fingerprint">请在设备设置中定义至少一个指纹</string>
 </resources>

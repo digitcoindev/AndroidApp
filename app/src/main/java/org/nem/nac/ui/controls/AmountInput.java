@@ -23,7 +23,7 @@ import timber.log.Timber;
 
 public final class AmountInput extends EditText {
 
-	private static final String ALLOWED_CHARS = "1234567890";
+	private static final String ALLOWED_CHARS = "1234567890.";
 	private static final int MAX_DECIMAL_DIGITS = 6;
 	@ColorInt
 	private int _colorText;
@@ -114,7 +114,8 @@ public final class AmountInput extends EditText {
 	}
 
 	private void init() {
-		setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		//setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		setRawInputType(InputType.TYPE_CLASS_NUMBER);
 		setFilters(new InputFilter[] { new MaxDecimalSignsFilter() });
 		addTextChangedListener(_validationWatcher);
 		_colorText = getCurrentTextColor();

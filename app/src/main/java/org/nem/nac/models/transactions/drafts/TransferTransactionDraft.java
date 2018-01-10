@@ -26,7 +26,57 @@ public final class TransferTransactionDraft extends AbstractTransactionDraft {
 		final Xems fee = new Xems();
 		final long amountXems = amount.getIntegerPart();
 
-		// fee for transfer
+		// July 11
+		if (amountXems < AppConstants.MinimumFee_cap_amount) {
+			fee.addXems(AppConstants.MinimumFee_factor);
+		} else {
+			double feecalc = AppConstants.MinimumFee_factor * ((long)(amountXems / AppConstants.MinimumFee_cap_amount));
+			if (feecalc>AppConstants.MinimumFee_caped)
+				fee.addXems(AppConstants.MinimumFee_caped);
+			else
+				fee.addXems(feecalc);
+		}
+
+		if (payloadLength > 0 && payloadLength <= AppConstants.MinimumFee_msg_char) {
+			fee.addXems(AppConstants.MinimumFee_factor);
+		} else if (payloadLength > AppConstants.MinimumFee_msg_char){
+			fee.addXems(AppConstants.MinimumFee_factor*((int)(payloadLength/AppConstants.MinimumFee_msg_char+1)));
+		}
+
+	  // June 13, revise fee
+	/*	if (amountXems < 10000L) {
+			fee.addXems(AppConstants.MinimumFee_factor);
+		} else {
+			double feecalc = AppConstants.MinimumFee_factor * ((long)(amountXems / 10000L));
+			if (feecalc>1.25)
+				fee.addXems(1.25);
+			else
+				fee.addXems(feecalc);
+		}
+
+		if (payloadLength > 0 && payloadLength <= 32) {
+			fee.addXems(AppConstants.MinimumFee_factor);
+		} else if (payloadLength > 32){
+			fee.addXems(AppConstants.MinimumFee_factor*((int)(payloadLength/32+1)));
+		} */
+
+	/*	if (amountXems < 10000L) {
+			fee.addXems(1);
+		} else {
+			int feecalc = (int) (amountXems / 10000L);
+			if (feecalc>25)
+				fee.addXems(25);
+			else
+				fee.addXems(feecalc);
+		}
+
+		if (payloadLength > 0 && payloadLength <= 32) {
+			fee.addXems(1);
+		} else if (payloadLength > 32){
+			fee.addXems(1+ payloadLength/32);
+		} */
+
+	/*	// fee for transfer
 		if (amountXems < 8) {
 			fee.addXems(10 - amountXems);
 		}
@@ -36,7 +86,7 @@ public final class TransferTransactionDraft extends AbstractTransactionDraft {
 		// fee for message
 		if (payloadLength > 0) {
 			fee.addXems(2 * Math.max(1, payloadLength / 16));
-		}
+		} */
 		return fee;
 	}
 

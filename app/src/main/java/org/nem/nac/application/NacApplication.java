@@ -47,13 +47,11 @@ import timber.log.Timber;
 @ReportsCrashes(
 		httpMethod = HttpSender.Method.PUT,
 		reportType = HttpSender.Type.JSON,
-		formUri = "http://193.84.22.102:8007/acra-nemapp/_design/acra-storage/_update/report",
-		formUriBasicAuthLogin = "reporter1",
-		formUriBasicAuthPassword = "123456",
+		formUri = "http://xxxx",
+		formUriBasicAuthLogin = "xxxx",
+		formUriBasicAuthPassword = "xxxx",
 		mode = ReportingInteractionMode.TOAST,
 		buildConfigClass = org.nem.nac.BuildConfig.class,
-		//applicationLogFile = AppConstants.LOG_FILE_NAME,
-		//applicationLogFileLines = 150,
 		resToastText = R.string.crash_report_toast_text
 )
 public final class NacApplication extends Application {

@@ -5,7 +5,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 
 import org.nem.nac.R;
+import org.nem.nac.application.AppConstants;
 import org.nem.nac.application.AppHost;
 import org.nem.nac.application.AppSettings;
 import org.nem.nac.common.async.AsyncResult;
@@ -58,6 +62,7 @@ import timber.log.Timber;
 
 public final class NewTransactionActivity extends NacBaseActivity {
 
+	public static final String EXTRA_STR_NAME   = NewTransactionActivity.class.getName() + ".e-name";
 	public static final String EXTRA_STR_ADDRESS   = NewTransactionActivity.class.getName() + ".e-address";
 	public static final String EXTRA_DOUBLE_AMOUNT = NewTransactionActivity.class.getName() + ".e-amount";
 	public static final String EXTRA_STR_MESSAGE   = NewTransactionActivity.class.getName() + ".e-message";
@@ -67,6 +72,8 @@ public final class NewTransactionActivity extends NacBaseActivity {
 	private TextView                 _balanceLabel;
 	private ViewGroup                _fromPanel;
 	private AutocompleteAddressInput _recipientInput;
+	private TextView _nameInput;
+	private LinearLayout _nameInput_layout;
 	private AmountInput              _amountInput;
 	private EditText                 _messageInput;
 	private TextView                 _feeLabel;
@@ -116,6 +123,8 @@ public final class NewTransactionActivity extends NacBaseActivity {
 		showBalance(null);
 		_fromPanel = (ViewGroup)findViewById(R.id.panel_from);
 		_recipientInput = (AutocompleteAddressInput)findViewById(R.id.input_recipient);
+		_nameInput = (TextView) findViewById(R.id.input_recipient_name);
+		_nameInput_layout = (LinearLayout) findViewById(R.id.input_recipient_name_layout);
 		_amountInput = (AmountInput)findViewById(R.id.input_amount);
 		_amountInput.setAllowZero(true);
 		_amountInput.setTreatEmptyAsZero(true);
@@ -125,6 +134,7 @@ public final class NewTransactionActivity extends NacBaseActivity {
 		_messageInput.addTextChangedListener(_lengthValidator);
 		_feeLabel = (TextView)findViewById(R.id.label_fee);
 		_feeInput = (AmountInput)findViewById(R.id.input_fee);
+		_feeInput.addTextChangedListener(_feeChangerMax);
 		_feeInput.setAllowZero(true);
 		_feeInput.setTreatEmptyAsZero(true);
 		_feeInput.setOnEditorActionListener((v, actionId, event) -> {
@@ -161,6 +171,7 @@ public final class NewTransactionActivity extends NacBaseActivity {
 	protected void onStart() {
 		super.onStart();
 		final String addressStr = getIntent().getStringExtra(EXTRA_STR_ADDRESS);
+		final String nameStr = getIntent().getStringExtra(EXTRA_STR_NAME);
 		final double amount = getIntent().getDoubleExtra(EXTRA_DOUBLE_AMOUNT, 0.0);
 		final String messageStr = getIntent().getStringExtra(EXTRA_STR_MESSAGE);
 		_encryptMsg = getIntent().getBooleanExtra(EXTRA_BOOL_ENCRYPTED, false);
@@ -168,6 +179,19 @@ public final class NewTransactionActivity extends NacBaseActivity {
 
 		if (StringUtils.isNotNullOrEmpty(addressStr)) {
 			_recipientInput.setText(addressStr);
+
+			if (nameStr!=null){
+				if (nameStr.length()>0){
+					_nameInput_layout.setVisibility(View.VISIBLE);
+					_nameInput.setText(nameStr);
+				} else {
+					_nameInput_layout.setVisibility(View.GONE);
+				}
+			} else {
+				_nameInput_layout.setVisibility(View.GONE);
+			}
+		} else {
+			_nameInput_layout.setVisibility(View.GONE);
 		}
 		try {
 			final String textTag = (String)_amountInput.getTag();
@@ -425,9 +449,21 @@ public final class NewTransactionActivity extends NacBaseActivity {
 				balanceHtml = "<small>" + balanceHtml + "</small>";
 			}
 			String amountStr = String.format(amountFormat, balanceHtml);
-			_balanceLabel.setText(Html.fromHtml(amountStr));
+			_balanceLabel.setText(fromHtml(amountStr));
 			_balanceLabel.setSelected(true);
 		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public static Spanned fromHtml(String html){
+		Spanned result;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+			result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+		} else {
+			result = Html.fromHtml(html);
+		}
+
+		return result;
 	}
 
 	private void refreshEncButtonState() {
@@ -442,11 +478,12 @@ public final class NewTransactionActivity extends NacBaseActivity {
 				_encryptMsg ? Ed25519Helper.getEncryptedMessageLength(message.toString())
 						: message.toString().getBytes().length;
 		final Xems minFee = TransferTransactionDraft.calculateMinimumFee(amount, payloadLength);
+		Log.d("122-", "Payload: "+String.valueOf(payloadLength));
 
 		final String feeLabelStr = getString(R.string.label_fee_colon,
 				Integer.toHexString(getResources().getColor(R.color.official_green) & 0x00ffffff),
 				NumberUtils.toString(minFee.getAsFractional()));
-		_feeLabel.setText(Html.fromHtml(feeLabelStr));
+		_feeLabel.setText(fromHtml(feeLabelStr));
 
 		if (!_feeInput.hasFocus()) {
 			_feeInput.setAmount(minFee);
@@ -461,6 +498,29 @@ public final class NewTransactionActivity extends NacBaseActivity {
 			InputErrorUtils.setErrorState(_messageInput, null);
 		}
 	}
+
+	private final TextWatcher _feeChangerMax = new TextWatcher() {
+		@Override
+		public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {}
+
+		@Override
+		public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {}
+
+		@Override
+		public void afterTextChanged(final Editable s) {
+			final Xems amount = _feeInput.getAmount().orElse(Xems.ZERO);
+			final long amountXems = amount.getIntegerPart();
+			if (amountXems> AppConstants.MinimumFee_max_input)
+				_feeInput.setText(String.valueOf(AppConstants.MinimumFee_max_input));
+				//_feeInput.setText("99");
+
+			String ss=_feeInput.getText().toString();  // limit to max 5 char
+			if (ss.length()>5) {
+				_feeInput.setText(ss.substring(0, 5));
+				_feeInput.setSelection(5);
+			}
+		}
+	};
 
 	private final TextWatcher _feeChanger = new TextWatcher() {
 		@Override

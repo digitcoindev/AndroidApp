@@ -10,28 +10,48 @@ buildscript {
     }
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    /* signingConfigs {
+         config {
+             keyAlias keystoreProperties['keyAlias']
+             keyPassword keystoreProperties['keyPassword']
+             storeFile file(keystoreProperties['storeFile'])
+             storePassword keystoreProperties['storePassword']
+         }
+     }  */
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
     tasks.whenTaskAdded { task ->
+        //println("J343 ***************** ---------- *******************"+task.name);
         switch (task.name) {
-            case "compileDemoDebugSources":
-            case "compileDemoReleaseSources":
-                task.dependsOn buildDemoApp
+            case "compile_mainnetDebugSources":
+            case "compile_mainnetReleaseSources":
+                task.dependsOn build_mainnetApp
                 break;
-            default:
-                if (task.name.matches(~/^compile.+(Debug|Release)Sources$/)) {
-                    task.dependsOn buildDevApp
-                }
-                break
+            case "compile_testnetDebugSources":
+            case "compile_testnetReleaseSources":
+                task.dependsOn build_testnetApp
+                break;
+            case "compile_mainnet_cnDebugSources":
+            case "compile_mainnet_cnReleaseSources":
+                task.dependsOn build_mainnetApp
+                break;
+            case "compile_testnet_cnDebugSources":
+            case "compile_testnet_cnReleaseSources":
+                task.dependsOn build_testnetApp
+                break;
         }
     }
+
     def String versionNameStr = getVersionName()
     defaultConfig {
-        applicationId "org.nem.nac.mainnet"
         minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 1
+        targetSdkVersion 25
+        versionCode 104
         versionName versionNameStr
         multiDexEnabled true
     }
@@ -43,9 +63,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //signingConfig signingConfigs.config
         }
         debug {
             versionNameSuffix "-debug"
+            //signingConfig signingConfigs.config
         }
     }
     packagingOptions {
@@ -53,20 +75,73 @@ android {
         exclude 'META-INF/NOTICE'
     }
     productFlavors {
-        dev {
+        _mainnet {
+           // signingConfig signingConfigs.config
+            applicationId 'org.nem.nac.mainnet'
+            manifestPlaceholders = [appIcon: "@mipmap/ic_launcher_mainnet"]
+            resValue "string", "app_name", "NEM Wallet+"
+            resValue "color", "official_green", "#1f9ab6"
+            resValue "color", "official_green_dark", "#0b6276"
+            resValue "color", "main_green", "#1f9ab6"
+            resValue "color", "toolbar_background_default", "#1f9ab6"
         }
-        demo {
+        _testnet {
+           // signingConfig signingConfigs.config
+            applicationId 'org.nem.nac.testnet'
+            manifestPlaceholders = [appIcon: "@mipmap/ic_launcher_testnet"]
+            resValue "string", "app_name", "NEM Wallet+"
+            resValue "color", "official_green", "#FFE66128"
+            resValue "color", "official_green_dark", "#FF932908"
+            resValue "color", "main_green", "#FFE66128"
+            resValue "color", "toolbar_background_default", "#FFE66128"
         }
+
+        _mainnet_cn {
+           // signingConfig signingConfigs.config
+            applicationId 'org.nem.nac.mainnet'
+            manifestPlaceholders = [appIcon: "@mipmap/ic_launcher_mainnet"]
+            resValue "string", "app_name", "NEM移动终端+"
+            resValue "color", "official_green", "#1f9ab6"
+            resValue "color", "official_green_dark", "#0b6276"
+            resValue "color", "main_green", "#1f9ab6"
+            resValue "color", "toolbar_background_default", "#1f9ab6"
+        }
+        _testnet_cn {
+          //  signingConfig signingConfigs.config
+            applicationId 'org.nem.nac.testnet'
+            manifestPlaceholders = [appIcon: "@mipmap/ic_launcher_testnet"]
+            resValue "string", "app_name", "NEM移动终端+"
+            resValue "color", "official_green", "#FFE66128"
+            resValue "color", "official_green_dark", "#FF932908"
+            resValue "color", "main_green", "#FFE66128"
+            resValue "color", "toolbar_background_default", "#FFE66128"
+        }
+
+
     }
     dexOptions {
         jumboMode = true
     }
 }
 
+String java8 = getJavaVersion(8)
+String java7 = getJavaVersion(7)
+
 retrolambda {
-    jdk System.getenv("JAVA8_HOME")
-    oldJdk System.getenv("JAVA7_HOME")
     javaVersion JavaVersion.VERSION_1_7
+
+    println("J343 ***************** ---------- *******************")
+    println("J343 JAVA8_HOME: " + java8)
+    println("J343 JAVA7_HOME: " + java7)
+    println("J343 ***************** ---------- *******************")
+}
+
+String getJavaVersion(Integer v) {
+    def sout = new StringBuffer()
+    def proc = "/usr/libexec/java_home -v 1.$v".execute()
+    proc.consumeProcessOutput(sout, new StringBuffer())
+    proc.waitForOrKill(1000)
+    return sout.toString().replace("\n", "").replace("\r", "")
 }
 
 dependencies {
@@ -76,9 +151,9 @@ dependencies {
     compile 'com.annimon:stream:1.0.5'
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.madgag.spongycastle:prov:1.51.0.0'
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
     compile 'com.google.zxing:core:3.2.1'
     compile 'nl.qbusict:cupboard:2.1.4'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
@@ -133,20 +208,20 @@ def String getVersionName() {
         def versionMajor = props.getProperty(PROP_MAJOR, "0");
         def versionMinor = props.getProperty(PROP_MINOR, "0");
         def versionProduction = props.getProperty(PROP_PRODUCTION, "0").toInteger();
-
-        return versionMajor + "." + versionMinor + "." + versionProduction + " BETA Mainnet";
+        return versionMajor + "." + versionMinor + "." + versionProduction;
     } else {
         throw new IOException("Failed to read version file!");
     }
 }
 
-task buildDevApp << {
+task build_mainnetApp <<{
     bumpVersion(false);
+    android.defaultConfig.versionName = getVersionName()
     setApkName();
 }
 
-task buildDemoApp << {
-    bumpVersion(true);
+task build_testnetApp <<{
+    bumpVersion(false);
     android.defaultConfig.versionName = getVersionName()
     setApkName();
 }
@@ -158,9 +233,10 @@ def setApkName() {
                 output.outputFile = new File(
                         output.outputFile.parent,
                         output.outputFile.name
-                                .replace("app-", "NEM-")
+                                .replace("app-", "NEM")
                                 .replace(".apk", "_v${android.defaultConfig.versionName}.apk"))
             }
         }
     }
 }
+

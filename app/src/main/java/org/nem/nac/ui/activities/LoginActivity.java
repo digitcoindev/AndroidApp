@@ -1,24 +1,33 @@
 package org.nem.nac.ui.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.annimon.stream.Optional;
 
 import org.nem.nac.BuildConfig;
+import org.nem.nac.FingerPrint.StartFingerprint;
 import org.nem.nac.R;
+import org.nem.nac.application.AppConstants;
 import org.nem.nac.application.AppHost;
 import org.nem.nac.application.AppSettings;
 import org.nem.nac.common.async.AsyncResult;
+import org.nem.nac.crypto.Mcrypto;
 import org.nem.nac.datamodel.NacPersistenceRuntimeException;
 import org.nem.nac.datamodel.repositories.AccountRepository;
 import org.nem.nac.models.BinaryData;
@@ -78,6 +87,7 @@ public final class LoginActivity extends NacBaseActivity {
 		}
 	}
 
+	private View btnLogin;
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,7 +100,7 @@ public final class LoginActivity extends NacBaseActivity {
 		}
 
 		_dialogLayout = (ViewGroup)findViewById(R.id.layout_dialog);
-		final View btnLogin = findViewById(R.id.btn_login);
+		btnLogin = findViewById(R.id.btn_login);
 		btnLogin.setOnClickListener(this::onLoginClick);
 		_passwordInput = (EditText)findViewById(R.id.input_password);
 		_passwordInput.addTextChangedListener(_clearErrorWatcher);
@@ -98,6 +108,7 @@ public final class LoginActivity extends NacBaseActivity {
 		if (BuildConfig.DEBUG) {
 			_passwordInput.setText("123456");
 			_passwordInput.setSelectAllOnFocus(true);
+
 		}
 		btnLogin.setOnFocusChangeListener((v, hasFocus) -> {
 			if (hasFocus) {
@@ -141,6 +152,11 @@ public final class LoginActivity extends NacBaseActivity {
 		}
 		else {
 			Timber.d("Key not present, waiting for password input");
+			///  don' show finger print if pw not store
+			String pwStoreIsEmpty= AppSettings.instance().getPassword();
+			if (pwStoreIsEmpty!=null){
+				checkStartFingerprint();
+			}
 		}
 	}
 
@@ -232,4 +248,66 @@ public final class LoginActivity extends NacBaseActivity {
 			InputErrorUtils.clearErrorState(_passwordInput);
 		}
 	};
+
+	//////////  finger print
+	private boolean forgotPWmode=false;
+	private void checkStartFingerprint() {
+		if (forgotPWmode){
+			forgotPWmode=false;
+			return;
+		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			//Fingerprint API only available on from Android 6.0 (M)
+			FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
+			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+				// TODO: Consider calling
+				//    ActivityCompat#requestPermissions
+				// here to request the missing permissions, and then overriding
+				//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+				//                                          int[] grantResults)
+				// to handle the case where the user grants the permission. See the documentation
+				// for ActivityCompat#requestPermissions for more details.
+				return;
+			}
+			if (!fingerprintManager.isHardwareDetected()) {
+				// Device doesn't support fingerprint authentication
+				Button fpButton = (Button) findViewById(R.id.btn_fingerprint);
+				fpButton.setVisibility(View.GONE);
+			} else if (!fingerprintManager.hasEnrolledFingerprints()) {
+				// User hasn't enrolled any fingerprints to authenticate with
+				Toast.makeText(this, R.string.login_reg_fingerprint, Toast.LENGTH_LONG).show();
+			} else {
+				StartFingerprint StartFP = new StartFingerprint(this);
+				FingerprintPWThread(); // Everything is ready for fingerprint authentication
+			}
+		} else {
+			// Device doesn't support fingerprint authentication
+			Button fpButton = (Button) findViewById(R.id.btn_fingerprint);
+			fpButton.setVisibility(View.GONE);
+		}
+	}
+
+	public static Thread loginFingerprintPWThread;
+	private void FingerprintPWThread(){
+		loginFingerprintPWThread = new Thread() {
+			@Override
+			public void run() {
+				String encPw= AppSettings.instance().getPassword();
+				if (encPw==null)
+						return;
+				String pw= null;
+				try {
+					pw = new Mcrypto().decryptPassword(encPw, AppConstants.secKey);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				//Toaster.instance().show("Password: "+pw);
+				if (BuildConfig.DEBUG) {
+					_passwordInput.setText("");
+				}
+				_passwordInput.setText(pw);
+				btnLogin.performClick();
+			}
+		};
+	}
 }

@@ -21,6 +21,7 @@ public final class MessageDraft {
 		final int length = encrypted ? Ed25519Helper.getEncryptedMessageLength(message) : message.getBytes().length;
 		return length <= AppConstants.MAX_MESSAGE_LENGTH_BYTES;
 	}
+
 	private MessageType type = MessageType.NOT_ENCRYPTED;
 	/**
 	 * The value is the actual (possibly encrypted) message data.

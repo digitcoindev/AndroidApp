@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +47,24 @@ public final class ConfirmDialogFragment extends NacBaseDialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View view = super.onCreateView(inflater, container, savedInstanceState);
 		final TextView messageLabel = (TextView)view.findViewById(R.id.label_message);
-		messageLabel.setText(StringUtils.isNotNullOrEmpty(_message) ? Html.fromHtml(_message) : "");
+		messageLabel.setText(StringUtils.isNotNullOrEmpty(_message) ? fromHtml(_message) : "");
 		return view;
 	}
 
 	@Override
 	protected int getContentLayout() {
 		return R.layout.fragment_confirm_dialog;
+	}
+
+	@SuppressWarnings("deprecation")
+	public static Spanned fromHtml(String html){
+		Spanned result;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+			result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+		} else {
+			result = Html.fromHtml(html);
+		}
+
+		return result;
 	}
 }

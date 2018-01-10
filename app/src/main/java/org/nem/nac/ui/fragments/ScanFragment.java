@@ -158,6 +158,7 @@ public final class ScanFragment extends BaseTabFragment implements QRCodeReaderV
 			case INVOICE: {
 				final QrInvoice qrInvoice = (QrInvoice)qrData;
 				final Intent intent = new Intent(getActivity(), NewTransactionActivity.class)
+						.putExtra(NewTransactionActivity.EXTRA_STR_NAME, qrInvoice.name)
 						.putExtra(NewTransactionActivity.EXTRA_STR_ADDRESS, qrInvoice.address.getRaw())
 						.putExtra(NewTransactionActivity.EXTRA_STR_MESSAGE, qrInvoice.message)
 						.putExtra(NewTransactionActivity.EXTRA_DOUBLE_AMOUNT, qrInvoice.amount.getAsFractional())
@@ -183,6 +184,7 @@ public final class ScanFragment extends BaseTabFragment implements QRCodeReaderV
 							}
 							if (sendTransaction) {
 								final Intent intent = new Intent(getActivity(), NewTransactionActivity.class)
+										.putExtra(NewTransactionActivity.EXTRA_STR_NAME, qrUserInfo.name)
 										.putExtra(NewTransactionActivity.EXTRA_STR_ADDRESS, qrUserInfo.address.getRaw());
 								startActivity(intent);
 								scanFurther = false;

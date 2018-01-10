@@ -3,7 +3,7 @@
 	package="org.nem.nac"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	>
-
+	<uses-permission android:name="android.permission.USE_FINGERPRINT" />
 	<uses-permission android:name="android.permission.CAMERA"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -29,7 +29,7 @@
 	<application
 		android:name=".application.NacApplication"
 		android:allowBackup="true"
-		android:icon="@drawable/ic_launcher"
+		android:icon="${appIcon}"
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme">
 

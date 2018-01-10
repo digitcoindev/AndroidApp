@@ -2,16 +2,19 @@ package org.nem.nac.ui.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -434,7 +437,79 @@ public final class MessagesActivity extends NacBaseActivity {
 	/**
 	 * SEND CLICK
 	 */
-	private void onSendMessageClick(final View clicked) {
+	private void onSendMessageClick_pre(final View clicked){
+
+		final Optional<Xems> amount1 = _amountInput.getAmount();
+		if (!amount1.isPresent()) {
+			enableSendButton(true);
+			return;
+		}
+
+		final String msgText = _messageInput.getText().toString();
+		byte[] msgData = msgText.getBytes();
+
+		final MessageDraft messageDraft = MessageDraft.create(msgData);
+		if (messageDraft != null) {
+			if (!MessageDraft.isLengthValid(msgText, _encryptMsg)) {
+				InputErrorUtils.setErrorState(_messageInput, R.string.errormessage_message_too_long);
+				_messageInput.requestFocus();
+				enableSendButton(true);
+				return;
+			}
+		}
+		if (messageDraft != null && _encryptMsg) {
+			new EncryptMessageAsyncTask(this, _meAcc.privateKey, _companion, messageDraft)
+					.withCompleteCallback(this::onMessageEncrypted)
+					.execute();
+		}
+
+		LayoutInflater inflater = getLayoutInflater();
+		View views = inflater.inflate(R.layout.dialog_confirm_newtransaction, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		TextView title=(TextView) views.findViewById(R.id.confm_new_title);
+		TextView amount=(TextView) views.findViewById(R.id.confm_new_amount);
+		TextView msg=(TextView) views.findViewById(R.id.confm_new_msg);
+		TextView address=(TextView) views.findViewById(R.id.confm_new_address);
+		builder.setView(views);
+
+		String msgStr = _messageInput.getText().toString();
+		Optional<Xems> amountX = _amountInput.getAmount();
+		String amountStr=amountX.get().toString();
+		String AddressName = _companion.toNameOrDashed();
+		String addressStr = _companion.toString();
+
+		title.setText(AddressName);
+		amount.setText(amountStr);
+		msg.setText(msgStr);
+		address.setText(addressStr);
+
+		builder.setCancelable(true);
+
+		builder.setPositiveButton(
+				getString(R.string.btn_send),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						onSendMessageClick();
+						//Toast.makeText(MessagesActivity.this, "Send.......", Toast.LENGTH_SHORT).show();
+						dialog.cancel();
+					}
+				});
+
+		builder.setNegativeButton(
+				getString(R.string.text_CANCEL),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						//Toast.makeText(MessagesActivity.this, "Cancel.......", Toast.LENGTH_SHORT).show();
+						dialog.cancel();
+					}
+				});
+
+		AlertDialog alert11 = builder.create();
+		alert11.show();
+	}
+
+	private void onSendMessageClick() {
 		Timber.i("Send transaction click");
 		enableSendButton(false);
 
@@ -577,7 +652,7 @@ public final class MessagesActivity extends NacBaseActivity {
 		_amountInput.setTreatEmptyAsZero(true);
 		_amountInput.setAllowZero(true);
 		_sendBtn = (TextView)findViewById(R.id.btn_send);
-		_sendBtn.setOnClickListener(this::onSendMessageClick);
+		_sendBtn.setOnClickListener(this::onSendMessageClick_pre);
 	}
 
 	private void enableEncryptButton(final boolean enable) {

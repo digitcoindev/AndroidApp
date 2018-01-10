@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 
+import org.nem.nac.application.AppConstants;
 import org.nem.nac.common.SizeOf;
 import org.nem.nac.common.enums.MultisigCosignatoryModificationType;
 import org.nem.nac.common.enums.TransactionType;
@@ -54,9 +55,12 @@ public final class AggregateModificationTransactionDraft extends AbstractTransac
 		final Xems fee = new Xems();
 		final int modificationsCount = _modifications.size();
 		final boolean minCosigsModificationPresent = this.minCosignatoriesRelativeChange != 0;
-		fee.addXems(10 + 6 * modificationsCount);
+		//fee.addXems(10 + 6 * modificationsCount);
+		fee.addXems(10* AppConstants.MinimumFee_factor + AppConstants.MinimumFee_basic *
+				AppConstants.MinimumFee_factor * modificationsCount);
 		if (minCosigsModificationPresent) {
-			fee.addXems(6);
+			//fee.addXems(6);
+			fee.addXems(AppConstants.MinimumFee_basic*AppConstants.MinimumFee_factor);
 		}
 		return fee;
 	}
